@@ -1,0 +1,49 @@
+
+  <!-- For Footer bottom -->
+  <div class="album py-5 bg m-50">
+    <div class="container">
+    <div class="breadcumbs">
+        <span class="bread-text">< Retourner au choix du type de photos</span>
+    </div>
+      <div class="row">
+        <div class="col-md-3 col-xs-3 col-sm-3 cell">
+            <div class="vertical-center">
+                <h6 class="fw-light footer-title"><b>Photo originale</b></h6>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-6 col-sm-6">
+            <div *ngIf="uploaded==false" class="add-bg" (click)="file.click()">
+                <div class="element">
+                    <img class="add-img center"  src="../../assets/img/add.svg" width="100">
+                    <span class="text-gray text-1 center">Ajouter une photo</span>
+                </div>
+            </div>
+            <div *ngIf="uploaded==true">
+              <img [src]="base64" alt="">
+            </div>
+        </div>
+        <div *ngIf="base64" class="col-md-3 col-xs-3 col-sm-3" style="display: flex;flex-wrap: nowrap;  align-content: space-around; justify-content: flex-start; align-items: center;">
+          <button (click)="productGo()" type="button" class="btn btn-secondary">Je valide</button>
+        </div>
+      </div>
+      <div class="hidden"><input type="file" accept="image/*" #file (change)="fileChangeEvent($event)"/></div>
+
+      
+      <ngx-photo-editor
+      [imageChangedEvent]="imageChangedEvent"
+      (imageCropped)="imageCropped($event)"
+      [aspectRatio]="4/3"
+      [viewMode]="3"
+      [resizeToWidth]="500"></ngx-photo-editor>
+
+      
+
+
+      
+
+    </div>
+  </div>
+
+
+
+

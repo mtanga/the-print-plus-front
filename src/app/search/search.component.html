@@ -1,0 +1,34 @@
+<section class="py-5 text-center  bg-custom">
+    <div class="row height d-flex justify-content-center align-items-center">
+      <div class="col-md-6 pp vertical-center">
+        <p class="titre text-white text-100">Rechercher un produit</p>
+          <div class="search"> <i class="fa fa-search"></i> <input [(ngModel)]="searchValue" (keyup)="filterList()" type="text" class="form-control" placeholder="Commencer à saisir ..." > <button class="text-100 btn btn-primary" (click)="filterList()">Rechercher</button> </div>
+      </div>
+  </div>
+</section>
+
+<div class="container p-50">
+    <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
+                
+        <div class="col"  *ngFor="let item of items;">
+        <div class="hand card">
+            <img src="https://admin.theprintplus-cm.com{{item.file_path}}"  alt="Add post"  class="card-img-top img-center" />
+            <div class="card-body">
+            <div class="justify-content-between align-items-center">
+                <div class="">
+                <p class="card-text product-title">{{item.name}}</p><br/>
+                <div class="meta">
+                    <p><span><b>{{item.subcategories.name}}</b></span>
+                        <br><span>
+                            À partir de <span class="price"><b>{{item.r_price}} F CFA</b></span>
+                        </span>
+                    </p>
+                </div>
+                <button (click)="productGo(item.id)" type="button" class="btn add-cart ">Je commande</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

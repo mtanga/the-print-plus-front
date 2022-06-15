@@ -1,0 +1,10 @@
+@media only screen and (max-width: 720px) {
+    .re-mobile {
+        flex-flow: column-reverse;
+      }
+    }
+
+    [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+      cursor: pointer;
+      color: white;
+  }

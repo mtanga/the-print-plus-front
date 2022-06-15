@@ -1,0 +1,23 @@
+.hand{
+    cursor: pointer;
+}
+
+.btn-info {
+    color:white;
+    background-color: #0dcaf0;
+    border-color: #0dcaf0;
+    text-align: right;
+    float: right;
+}
+
+.price{
+    color: #0dcaf0;
+}
+
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #01b0ef!important;
+    color: white!important;
+  }

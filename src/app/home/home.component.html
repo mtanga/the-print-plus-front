@@ -1,0 +1,105 @@
+<div class="container" >
+    <div class="row">
+        <div class="col-md-6 col-xs-6 col-sm-6 bg-custom padding">
+        </div>
+        <div class="col-md-6 col-xs-6 col-sm-6 bg-color-b">
+          <div class="padding">
+              <h3 class="centi text-white heading">Imprimez et encadrez</h3>
+              <p class="centi text-white sub">vos plus beaux souvenirs</p>
+              <a href="home#products"><button type="button" class="cent btn btn-white">Je crée mon souvenir</button></a>
+          </div>
+
+        </div>
+    </div>
+    <div class="row bg-gray">
+        <div class="col-md-3 col-xs-3 col-sm-3" >
+            <img class="p-custom"  src="../../assets/img/img1.svg" width="250">
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3" >
+            <img class="p-custom" src="../../assets/img/img2.svg" width="250">
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3" >
+            <img class="p-custom" src="../../assets/img/img3.svg" width="250">
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3" >
+            <img class="p-custom" src="../../assets/img/img4.svg" width="250">
+        </div>
+    </div>
+
+    <div id="products">
+        <div class="row space">
+            <h1 class="heading no-padding">Un large choix de créations à partir de <span class="rose">2000 FCFA</span></h1>
+            <p class="para no-padding">Pour vous accompagner dans la création de souvenirs et l’embellissement de vos intérieurs, nous vous offrons un large choix de produits :</p>
+        </div>
+    
+        <div style="padding-bottom:50px;">
+            <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3 py-3">
+                <div class="col" *ngFor="let item of infos;">
+                    <a [routerLink]="['/'+item.slug]">
+                        <div class="card">
+                            <i class="bi bi-heart"></i>
+                            <img class="p-custom center-all"  src="https://admin.theprintplus-cm.com{{item.file_path}}" width="100" alt="Plus">
+                            <div class="card-body text-center">
+                                <button type="button" class="btn btn-p">{{item.name}}</button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <i class="bi bi-heart"></i>
+                        <img class="p-custom center-all"  src="../../assets/img/plus.svg" width="100" alt="Plus">
+                        <div class="card-body text-center">
+                            <button type="button" class="btn btn-p">Plus à venir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-6 col-xs-6 col-sm-6 ml-d no-pl">
+            <img class="p-custom-img" src="../../assets/img/b1.svg" >
+        </div>
+        <div class="col-md-6 col-xs-6 col-sm-6 mr-d">
+          <div class="">
+              <h3 class="p-title">Présentation</h3>
+              <p class="p-text"><b>The Print+</b> est un service numérique de tirages photos qui permet aux utilisateurs d’imprimer leurs photos de grandes tailles à partir de notre site internet ou dans nos agences partenaires. Ils pourront passer leurs commandes et se faire livrer sur toute l’étendu du territoire national dans des délais raisonnables.</p>
+          </div>
+        </div>
+    </div>
+
+
+    <div class="row bg-gray m-50">
+        <div class="col-md-3 col-xs-3 col-sm-3 p-10" >
+            <h6 class="text-center text-5">Paiements sécurisés</h6>
+            <img class="img-center"  src="../../assets/img/pay.svg" width="150">
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 p-10" >
+            <h6 class="text-center text-5">Tirages de qualité</h6>
+            <img class="img-center"  src="../../assets/img/de.svg" width="50">
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 p-10" >
+            <h6 class="text-center text-5">Formats personnalisables</h6>
+            <img class="img-center"  src="../../assets/img/img.svg" width="50">
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 p-10" >
+            <h6 class="text-center text-5">Livraison partout au Cameroun</h6>
+            <img class="img-center"  src="../../assets/img/cmr.svg" width="30">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-xs-6 col-sm-6 ml-d no-pl">
+            <img class="p-custom-img" src="../../assets/img/borne.svg" >
+        </div>
+        <div class="col-md-6 col-xs-6 col-sm-6 mr-d no-pr">
+          <div class=""> <img class="p-custom-img" src="../../assets/img/borne2.svg" >
+          </div>
+        </div>
+    </div>
+
+</div>

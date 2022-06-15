@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="358" height="55.055" viewBox="0 0 358 55.055">
+  <g id="Groupe_2826" data-name="Groupe 2826" transform="translate(-186 -847)">
+    <g id="Groupe_2" data-name="Groupe 2" transform="translate(10 10)">
+      <path id="Tracé_1" data-name="Tracé 1" d="M836.356,632.375v-10.1h-4.069v14.169h14.166v-4.069Zm36.817-50.986v4.069h10.1v10.1h4.069V581.389Z" transform="translate(-656.287 255.611)" fill="#3c3c3c"/>
+      <text id="_1" data-name="1" transform="translate(197 871)" fill="#3c3c3c" font-size="21" font-family="Roboto-Black, Roboto" font-weight="800"><tspan x="0" y="0">1</tspan></text>
+    </g>
+    <text id="Choisissez_votre_type_de_produit" data-name="Choisissez votre type de produit" transform="translate(273 848)" fill="#3c3c3c" font-size="22" font-family="Roboto-Regular, Roboto"><tspan x="0" y="23">Choisissez votre type de </tspan><tspan x="0" y="48">produit</tspan></text>
+  </g>
+</svg>

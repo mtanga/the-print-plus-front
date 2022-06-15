@@ -1,0 +1,42 @@
+.phone{
+    background: #ECECEC;
+    padding: 10px;
+    color: black;
+    margin-right: 15px;
+}
+
+
+@media only screen and (min-width: 1025px) {
+    .navbar-nav {
+        float:none;
+        margin:0 auto;
+        display: block;
+        text-align: center;
+    }
+    
+    .navbar-nav > li {
+        display: inline-block;
+        float:none;
+    }
+} 
+
+li a {
+    color: #3C3C3C;
+}
+
+.breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    /* padding: 0 0; */
+    margin-bottom: -15px;
+    list-style: none;
+    border-top: 2px solid #ECECEC;
+    padding-top: 10px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    float: left;
+    padding-right: 0.5rem;
+    color: #6c757d;
+    content: var(--bs-breadcrumb-divider, ">");
+}
