@@ -171,7 +171,9 @@ ml-d{
 
 } 
 
-
+.hand{
+    cursor: pointer;
+}
 
 
 
@@ -185,7 +187,6 @@ ml-d{
     color: white;
     background-color: #9BC53D;
     border-color: #9BC53D;
-    padding: 10px;
     font-size: 1rem;
     text-align: left;
 }

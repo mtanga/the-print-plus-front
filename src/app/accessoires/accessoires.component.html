@@ -5,7 +5,7 @@
         <div class="col-md-6 col-xs-6 col-sm-6 bg-color-b">
           <div class="padding">
               <h3 class="centi text-white heading">Accéssoires</h3>
-              <a href="accessoires#products"><button type="button" class="cent btn btn-white">Je crée mon souvenir</button></a>
+              <a href="#products"><button type="button" class="cent btn btn-white">Je crée mon souvenir</button></a>
               <span class="centi text-white">À partir de 2000 FCFA</span>
           </div>
 
@@ -38,7 +38,7 @@
         </div>
         <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col"  *ngFor="let item of infos;">
-                <div class="hand card">
+                <div (click)="productGo(item.id)" class="hand card">
                     <img src="https://admin.theprintplus-cm.com{{item.file_path}}"  alt="Add post"  class="card-img-top img-center" />
                     <div class="card-body">
                     <div class="justify-content-between align-items-center">

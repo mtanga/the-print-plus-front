@@ -176,7 +176,6 @@ ml-d{
     color: white;
     background-color: #9BC53D;
     border-color: #9BC53D;
-    padding: 10px;
     font-size: 1rem;
     text-align: left;
 }
@@ -230,6 +229,9 @@ ml-d{
     width: 80%;
 }
 
+.hand{
+    cursor: pointer;
+}
 
 .card-body1 {
     flex: 1 1 auto;

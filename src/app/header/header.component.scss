@@ -5,6 +5,39 @@
     margin-right: 15px;
 }
 
+.me-2 {
+    padding-left: 10px;
+    padding-right: 15px;
+}
+
+.bg-white-o{
+    background: #ECECEC;
+    margin-bottom: -16px !important;
+    margin-left: -12px!important;
+    margin-right: -12px!important;
+}
+
+.navbar-toggler {
+    padding: 0.25rem 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid #00B0EF;
+    border-radius: 0.25rem;
+    transition: box-shadow .15s ease-in-out;
+}
+
+.navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background: #00B0EF;
+}
+
 
 @media only screen and (min-width: 1025px) {
     .navbar-nav {

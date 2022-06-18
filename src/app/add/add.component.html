@@ -1,30 +1,45 @@
 
   <!-- For Footer bottom -->
-  <div class="album py-5 bg m-50">
+  <div class="album py-5 bg m-50" style="margin-top:16px">
     <div class="container">
     <div class="breadcumbs">
-        <span class="bread-text">< Retourner au choix du type de photos</span>
+        <a href="javascript:history.back()" class="bread-text hand">< Retourner au choix du type de photos</a>
     </div>
       <div class="row">
         <div class="col-md-3 col-xs-3 col-sm-3 cell">
-            <div class="vertical-center">
+<!--             <div class="vertical-center">
                 <h6 class="fw-light footer-title"><b>Photo originale</b></h6>
-            </div>
+            </div> -->
         </div>
         <div class="col-md-6 col-xs-6 col-sm-6">
-            <div *ngIf="uploaded==false" class="add-bg" (click)="file.click()">
+            <div *ngIf="nombre_fois<infos.photos" class="add-bg hand" (click)="file.click()">
                 <div class="element">
                     <img class="add-img center"  src="../../assets/img/add.svg" width="100">
                     <span class="text-gray text-1 center">Ajouter une photo</span>
+                    <span class="text-gray text-1 center" style="color: green!Important;">Nombre de photos max : {{infos.photos - this.nombre_fois}}.</span>
                 </div>
             </div>
-            <div *ngIf="uploaded==true">
-              <img [src]="base64" alt="">
-            </div>
+            <span *ngIf="nombre_fois<infos.photos" style="color: red; text-align:center;display: block;">Vous ne pouvez sélectionner qu'une photo à la fois</span>
+           
+            <div *ngIf="infos.photos==1 && nombre_fois==infos.photos">
+              <div *ngFor="let img of images; index as i">
+                <img [src]="img" style="width: 95%;" class="img-responsive">
+                <span style="color: red;" (click)="delete(i)" class="delete hand">Supprimer</span>
+              </div>
+            </div> 
+           
         </div>
         <div *ngIf="base64" class="col-md-3 col-xs-3 col-sm-3" style="display: flex;flex-wrap: nowrap;  align-content: space-around; justify-content: flex-start; align-items: center;">
           <button (click)="productGo()" type="button" class="btn btn-secondary">Je valide</button>
         </div>
+
+        <div *ngIf="infos.photos>1" class="row imagetiles" style="padding-top:25px;">
+          <div *ngFor="let img of images; index as i" class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+              <img [src]="img" style="width: 95%;" class="img-responsive">
+              <span style="color: red;" (click)="delete(i)" class="delete hand">Supprimer</span>
+          </div>
+      </div>
+
       </div>
       <div class="hidden"><input type="file" accept="image/*" #file (change)="fileChangeEvent($event)"/></div>
 
@@ -33,8 +48,9 @@
       [imageChangedEvent]="imageChangedEvent"
       (imageCropped)="imageCropped($event)"
       [aspectRatio]="4/3"
-      [viewMode]="3"
-      [resizeToWidth]="500"></ngx-photo-editor>
+      [viewMode]="1"
+      [resizeToWidth]="0"
+      [resizeToHeight]="0"></ngx-photo-editor>
 
       
 

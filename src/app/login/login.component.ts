@@ -80,22 +80,28 @@ export class LoginComponent implements OnInit {
   loginUser(data, url){
     this.serviceApi.login(data, url).subscribe( async (da:any)=>{
      if(da.user){
-       let text = "Hello "+da.user.fisrt_name;
-      this.notice.showSuccess(text, "Connexion 'reussie ")
-      localStorage.setItem('is_user_infos', JSON.stringify(da.user));
-      if(localStorage.getItem('current_url')){
-        var url = localStorage.getItem('current_url');
-        let current_url = JSON.parse(url);
-        let params = {
-          id : current_url.value,
-        }
-        localStorage.removeItem('current_url');
-        this.functions.goToProduct("/produit", params);
-
-      }
-      else{
-        this.router.navigate(['/mon-compte']);
-      }
+        let text = "Hello "+da.user.fisrt_name;
+        this.notice.showSuccess(text, "Connexion 'reussie ")
+        localStorage.setItem('is_user_infos', JSON.stringify(da.user));
+        if(localStorage.getItem('current_url')){
+          var url = localStorage.getItem('current_url');
+          console.log(url);
+          let current_url = JSON.parse(url);
+          let params = {
+            id : current_url.value,
+          }
+          console.log("type", current_url.type);
+          //if(current_url.type){
+              localStorage.removeItem('current_url');
+              this.functions.goToProduct("/produit", params);
+          //}
+        //  else{
+         ///   this.router.navigate(['/mon-compte']);
+         // }
+          }
+          else{
+            this.router.navigate(['/mon-compte']);
+          }
      }
      else{
       this.notice.showError("Vos information de connexions sont incorrectes", "Statut de votre compte")

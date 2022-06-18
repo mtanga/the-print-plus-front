@@ -42,12 +42,27 @@
 }
 
 .btn-pay{
-    font-size: 1.5rem !important;
+    font-size: 1.4rem !important;
     background-color: #9BC53D;
     color: white;
     font-weight: 800;
     width: 100%;
 }
+.py-33 {
+    padding-top: 1rem!important;
+    padding-bottom: 1rem!important;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    width: 65%!important;
+    justify-content: space-between;
+}
+
+
 .hand{
     cursor: pointer;
 }

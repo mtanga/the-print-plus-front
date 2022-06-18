@@ -23,13 +23,14 @@ export class ProductComponent implements OnInit {
   item : any;
   image : any;
   bannerImg: any;
-  infos: any;
+  infos: any = [];
   quantity : string = "1";
   price: any;
   real_price: any;
   amount : number = 500;
   format: any;
   myCart: any = [];
+  images : any = []
 
 
   constructor(
@@ -42,11 +43,11 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    var dataImage = localStorage.getItem('imgData');
-    this.bannerImg = document.getElementById('tableBanner');
-    this.bannerImg.src = dataImage;
+    //var dataImage = localStorage.getItem('imgData');
+    //this.bannerImg = document.getElementById('tableBanner');
+    //this.bannerImg.src = dataImage;
 
-    this.image = this._sanitizer.bypassSecurityTrustStyle(`url(${localStorage.getItem('temp_image')})`);
+   // this.image = this._sanitizer.bypassSecurityTrustStyle(`url(${localStorage.getItem('temp_image')})`);
     this.sub = this.route
     .queryParams
     .subscribe( params  => {
@@ -82,9 +83,11 @@ export class ProductComponent implements OnInit {
       id : product
     }
     this.serviceApi.getDatas("getproduit", data).subscribe( async (da:any)=>{
-      console.log(da.data);
+      console.log("produit", da.data);
       this.infos = da.data[0];
       this.real_price = da.data[0].r_price;
+      this.images = JSON.parse(localStorage.getItem('temp_image'));
+      console.log(this.images);
     })
   }
 
@@ -97,8 +100,10 @@ export class ProductComponent implements OnInit {
 
 
 add_to_cart(product){
-  if(this.format == null){
-    this.notice.showError("Veuillez choisir un format", "Format invalide")
+  if(this.infos.formats?.length > 0){
+    if(this.format == null){
+      this.notice.showError("Veuillez choisir un format", "Format invalide")
+    }
   }
   else{
     if(localStorage.getItem('is_user_infos')!=null){
@@ -108,7 +113,7 @@ add_to_cart(product){
         product : product,
         qte : parseInt(this.quantity),
         format : this.format,
-        image : localStorage.getItem('imgData'),
+        image : this.images,
         price : this.real_price,
         id :  'cart_' + Math.random().toString(36).substr(2, 9),
       }
@@ -148,8 +153,10 @@ checkLogin(){
 
 
 payNow(product){
-  if(this.format == null){
-    this.notice.showError("Veuillez choisir un format", "Format invalide")
+  if(this.infos.formats?.length > 0){
+    if(this.format == null){
+      this.notice.showError("Veuillez choisir un format", "Format invalide")
+    }
   }
   else{
     if(localStorage.getItem('is_user_infos')!=null){
@@ -159,7 +166,7 @@ payNow(product){
         product : product,
         qte : parseInt(this.quantity),
         format : this.format,
-        image : localStorage.getItem('imgData'),
+        image : this.images,
         price : this.real_price,
         id :  'cart_' + Math.random().toString(36).substr(2, 9),
       }

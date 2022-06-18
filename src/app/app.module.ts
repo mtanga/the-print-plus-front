@@ -35,6 +35,7 @@ import { FormsModule } from '@angular/forms';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { CartComponent } from './cart/cart.component';
 import { SearchComponent } from './search/search.component';
+import { RedirectComponent } from './redirect/redirect.component';
 
 //676734912177-5t60ddc1ias75s49rdfdm7bdk8ul706r.apps.googleusercontent.com => id
 //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 => code secret
@@ -67,7 +68,8 @@ import { SearchComponent } from './search/search.component';
     DeliveryComponent,
     ComingSoonComponent,
     CartComponent,
-    SearchComponent
+    SearchComponent,
+    RedirectComponent
   ],
   imports: [
     BrowserModule,

@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
     }
     else{
       this.notice.showError("Vous devez vous connecter pour poursuivre", "Mon compte");
-      localStorage.setItem('current_url', this.router.url);
+      //localStorage.setItem('current_url', this.router.url);
       this.router.navigate(['/connexion']);
       return false;
     }

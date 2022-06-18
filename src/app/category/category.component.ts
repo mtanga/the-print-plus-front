@@ -44,6 +44,14 @@ export class CategoryComponent implements OnInit {
     this.functions.goToProduct("/charger", params);
   }
 
+  
+  scrollToContactTypes() {
+    this.router.onSameUrlNavigation = "reload";
+    this.router.navigate(["/settings"], { fragment: "contactTypes" }).finally(() => {
+        this.router.onSameUrlNavigation = "ignore"; // Restore config after navigation completes
+    });
+}
+
 
   showFormats(item){
     let show = "";

@@ -1,11 +1,11 @@
 <div class="container" >
-    <div class="row marge">
+    <div class="row">
         <div class="col-md-6 col-xs-6 col-sm-6 bg-custom padding">
         </div>
         <div class="col-md-6 col-xs-6 col-sm-6 bg-color-b">
           <div class="padding">
               <h3 class="centi text-white heading">Tirages photos</h3>
-              <a href="/tirages-photos#start">
+              <a href="#start">
                 <button type="button" class="cent btn btn-white">Je crée mon souvenir</button>
               </a>
               
@@ -14,7 +14,7 @@
 
         </div>
     </div>
-    <div class="row marge">
+    <div class="row">
         <div class="col-md-3 col-xs-3 col-sm-3 p-10 b-gray" >
             <h6 class="text-center text-5">Paiements sécurisés</h6>
             <img class="img-center"  src="../../assets/img/pay.svg" width="150">
@@ -35,30 +35,30 @@
     <div id="start">
         <div class="row space ">
             <h1 class="heading no-padding text-custom-black">Faites imprimer vos photos à partir de <span class="rose">2000 FCFA</span></h1>
-            <p class="marge para no-padding text-custom-black">S’il est aujourd’hui facile de partager des photos en ligne avec ses proches, il faut aussi dire que le développement photo fait son grand retour. Tirage petit format à garder dans son portefeuille, tirage classique à intégrer à un album photo, agrandissement à exposer façon poster : tout est possible !</p>
+            <p class=" para no-padding text-custom-black">S’il est aujourd’hui facile de partager des photos en ligne avec ses proches, il faut aussi dire que le développement photo fait son grand retour. Tirage petit format à garder dans son portefeuille, tirage classique à intégrer à un album photo, agrandissement à exposer façon poster : tout est possible !</p>
         </div>
         <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
                 
             <div class="col"  *ngFor="let item of infos;">
-            <div class="hand card">
-                <img src="https://admin.theprintplus-cm.com{{item.file_path}}"  alt="Add post"  class="card-img-top img-center" />
-                <div class="card-body">
-                <div class="justify-content-between align-items-center">
-                    <div class="">
-                    <p class="card-text product-title">{{item.name}}</p><br/>
-                    <div class="meta">
-                        <p><span><b>Format ({{item.formats[0].unit}}) :</b> {{showFormats(item.formats)}}</span>
-                            
-                            <br><span>
-                                À partir de <span class="price"><b>{{item.r_price}}</b></span>
-                            </span>
-                        </p>
+                <div (click)="productGo(item.id)" class="hand card">
+                    <img src="https://admin.theprintplus-cm.com{{item.file_path}}"  alt="Add post"  class="card-img-top img-center" />
+                    <div class="card-body">
+                    <div class="justify-content-between align-items-center">
+                        <div class="">
+                        <p class="card-text product-title">{{item.name}}</p><br/>
+                        <div class="meta">
+                            <p><span><b>Format ({{item.formats[0].unit}}) :</b> {{showFormats(item.formats)}}</span>
+                                
+                                <br><span>
+                                    À partir de <span class="price"><b>{{item.r_price}}</b></span>
+                                </span>
+                            </p>
+                        </div>
+                        <button (click)="productGo(item.id)" type="button" class="btn add-cart ">Je commande</button>
+                        </div>
                     </div>
-                    <button (click)="productGo(item.id)" type="button" class="btn add-cart ">Je commande</button>
                     </div>
                 </div>
-                </div>
-            </div>
             </div>
         </div>
     </div>

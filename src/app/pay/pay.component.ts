@@ -15,14 +15,15 @@ declare var CinetPay: any;
 export class PayComponent implements OnInit {
   myData: any[];
   totalt: number;
-  product: any;
+  product: any = [];
   format: any;
   infos: any;
   user: any;
   edit: boolean = true;
   edit_add : boolean = false;
   private _prevSelected: any;
-  new_product: any;
+  new_product: any = [];
+  paid : boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -150,7 +151,25 @@ buyNow(){
   this.payNow();
 }
 
-async payNow(){
+getOrders(){
+  console.log(this.product);
+  this.new_product = [];
+  this.product.forEach(element => {
+    let product = {
+      format : parseInt(element.format) || 0,
+      id : element.product.id,
+      images : element.image
+    }
+    this.new_product.push(product);
+  });
+  return this.new_product;
+}
+
+test(){
+  console.log(this.getOrders())
+}
+
+payNow(){
   CinetPay.setConfig({
       apikey: '17143088862973981cc5ad6.22031662',
       site_id: 589285,
@@ -159,17 +178,17 @@ async payNow(){
 });
     CinetPay.getCheckout({
       transaction_id: Math.floor(Math.random() * 100000000).toString(),
-      amount: 1000,
+      amount: 100,
       currency: 'XAF',
       channels: 'ALL',
-      description: 'Test de paiement',   
+      description: 'Paiement des produits',   
       //Fournir ces variables pour le paiements par carte bancaire
-      customer_name:"Joe",//Le nom du client
-      customer_surname:"Down",//Le prenom du client
-      customer_email: "down@test.com",//l'email du client
-      customer_phone_number: "088767611",//l'email du client
-      customer_address : "BP 0024",//addresse du client
-      customer_city: "Antananarivo",// La ville du client
+      customer_name:this.user.fisrt_name,//Le nom du client
+      customer_surname:this.user.last_name,//Le prenom du client
+      customer_email: this.user.email || "contact@theprintplus-cm.com",//l'email du client
+      customer_phone_number: this.infos.phone || "088767611",//l'email du client
+      customer_address : this.infos.po || "BP 0024",//addresse du client
+      customer_city: this.infos.pays || "Antananarivo",// La ville du client
       customer_country : "CM",// le code ISO du pays
       customer_state : "CM",// le code ISO l'état
       customer_zip_code : "06510", // code postal
@@ -178,22 +197,56 @@ async payNow(){
         CinetPay.waitResponse(function(data) {
           if (data.status == "REFUSED") {
             console.log("REFUSED", data);
-            
+            //window.location.href = "/redirect";
+
           } else if (data.status == "ACCEPTED") {
             console.log("ACCEPTED", data);
-            let restInfos = {
-              currency : data.currency,
-              status : data.status,
-              payment_method : data.payment_method,
-              date : data.payment_date
-            }
-            this.saveOrders(restInfos);
+            window.location.href = "/redirect";
           }
         });
         CinetPay.onError(function(data) {
           console.log(data);
         });
 }
+
+saveOrders(){
+  //test(){
+       //console.log(this.getOrders());
+      let data = {
+        products : this.getOrders(),
+        shipping_total : this.totalAmount(),
+        status : "Paid",
+        shipping_method : "Cash",
+        notes : "Paiement de produits",
+        shipping_address_id : 0,
+        currency : "XAF",
+        user_id : this.user.id,
+      }  
+  
+  /*
+     let data = {
+        products : this.getOrders(),
+        shipping_total : this.totalAmount(),
+        status : "test",
+        shipping_method : "test",
+        notes : "test",
+        shipping_address_id : 1,
+        currency : "test",
+        user_id : this.user.id
+      } 
+      */
+  
+       this.serviceApi.getDatas("order", data).subscribe( async (da:any)=>{
+        console.log(da);
+        if(da.success == true){
+          localStorage.removeItem('the_print_cart');
+          this.notice.showSuccess("Votre commande a été enregistrée, nous vous contacterons dans les plus brefs délais.", "Votre commade")
+          this.router.navigate(['/mon-compte']);
+        } 
+      }) 
+  
+    }
+
 
   profile(f){
     if(f.form.value.fisrt_name ==null || f.form.value.fisrt_name =="" || f.form.value.fisrt_name == undefined){
@@ -253,55 +306,5 @@ async payNow(){
     }
   }
 
-  getOrders(){
-    console.log(this.product);
-    this.new_product = [];
-    this.product.forEach(element => {
-      let product = {
-        format : parseInt(element.format),
-        id : element.product.id
-      }
-      this.new_product.push(product);
-    });
-    return this.new_product;
-  }
-
- 
-
-saveOrders(infos){
-//test(){
-    console.log(this.getOrders());
-    let data = {
-      products : this.getOrders(),
-      shipping_total : this.totalAmount(),
-      status : infos.status,
-      shipping_method : infos.payment_method,
-      notes : infos.description,
-      shipping_address_id : this.infos.id,
-      currency : infos.currency,
-      user_id : this.user.id,
-    } 
-
- /*    let data = {
-      products : this.getOrders(),
-      shipping_total : this.totalAmount(),
-      status : "test",
-      shipping_method : "test",
-      notes : "test",
-      shipping_address_id : 1,
-      currency : "test",
-      user_id : this.user.id
-    } */
-
-     this.serviceApi.getDatas("order", data).subscribe( async (da:any)=>{
-      console.log(da);
-      if(da.success == true){
-        localStorage.removeItem('the_print_cart');
-        this.notice.showSuccess("Votre commande a été enregistrée, nous vous contacterons dans les plus brefs délais.", "Votre commade")
-        this.router.navigate(['/mon-compte']);
-      }
-    }) 
-
-  }
 
 }

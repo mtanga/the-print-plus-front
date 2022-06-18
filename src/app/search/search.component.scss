@@ -48,10 +48,17 @@
      width: 15px !important;
  }
 
+ .mp-12{
+     margin-top: 16px;
+ }
 
 
  .text-custom-black{
     color:#3C3C3C;
+ }
+
+ .hand{
+     cursor: pointer;
  }
 
  .p-50{
@@ -228,7 +235,6 @@ ml-d{
     color: white;
     background-color: #9BC53D;
     border-color: #9BC53D;
-    padding: 10px;
     font-size: 1rem;
     text-align: left;
 }

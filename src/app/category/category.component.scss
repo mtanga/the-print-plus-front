@@ -60,6 +60,7 @@ a{
 
 .heading{
         font-size: 3.1rem;
+        padding-left: 0px!important;
 }
 
 .rose{
@@ -87,6 +88,7 @@ a{
 }
 .para{
     font-size: 1.3rem;
+    padding-left: 0px!important;
 }
 .p-custom{
     padding-top: 25px;
@@ -185,9 +187,11 @@ ml-d{
     color: white;
     background-color: #9BC53D;
     border-color: #9BC53D;
-    padding: 10px;
     font-size: 1rem;
     text-align: left;
+}
+.hand{
+    cursor: pointer;
 }
 
 .card {

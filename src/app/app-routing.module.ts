@@ -18,6 +18,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { NoticeComponent } from './notice/notice.component';
 import { PayComponent } from './pay/pay.component';
 import { ProductComponent } from './product/product.component';
+import { RedirectComponent } from './redirect/redirect.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './reset/reset.component';
 import { SearchComponent } from './search/search.component';
@@ -25,6 +26,7 @@ import { SearchComponent } from './search/search.component';
 
 
 const routes: Routes = [
+
   { 
    path: 'home', 
    component: HomeComponent 
@@ -58,6 +60,10 @@ const routes: Routes = [
     path: 'tirages-photos', 
     component: CategoryComponent 
     },
+    { 
+      path: 'redirect', 
+      component: RedirectComponent 
+      },
     { 
       path: 'deco-murale', 
       component: DecoComponent 
@@ -118,7 +124,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', useHash:true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
