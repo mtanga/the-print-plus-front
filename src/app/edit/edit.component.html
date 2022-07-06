@@ -1,0 +1,81 @@
+
+  <!-- For Footer bottom -->
+  <div class="album py-5 bg m-50" style="margin-top:16px">
+    <div class="container">
+    <div class="breadcumbs">
+        <a style="color:green!important;"  href="javascript:history.back()" class="bread-text hand">< Retourner au panier</a>
+    </div>
+      <div class="row">
+        <div class="col-md-3 col-xs-3 col-sm-3 cell">
+<!--             <div class="vertical-center">
+                <h6 class="fw-light footer-title"><b>Photo originale</b></h6>
+            </div> -->
+        </div>
+        <div class="col-md-6 col-xs-6 col-sm-6">
+            <div *ngIf="infos.image.length<infos.product.photos || infos.image.length==0" class="add-bg hand" (click)="file.click()">
+                <div class="element">
+                    <img class="add-img center"  src="../../assets/img/add.svg" width="100">
+                    <span class="text-gray text-1 center">Ajouter une photo</span>
+                    <span class="text-gray text-1 center" style="color: green!Important;">Nombre de photos max : {{infos.product.photos - infos.image.length}}.</span>
+                </div>
+            </div>
+            <span *ngIf="infos.image.length<infos.photos" style="color: red; text-align:center;display: block;">Vous ne pouvez sélectionner qu'une photo à la fois</span>
+           
+
+            <div *ngIf="infos.product.photos==1 && infos.image.length==infos.product.photos">
+              <div *ngFor="let img of infos.image; index as i">
+                <img [src]="img" style="width: 95%;" class="img-responsive">
+                <span style="color: red;" (click)="delete(i)" class="delete hand">Supprimer</span>
+              </div>
+            </div> 
+           
+        </div>
+        <div *ngIf="base64" class="col-md-3 col-xs-3 col-sm-3" style="display: flex;flex-wrap: nowrap;  align-content: space-around; justify-content: flex-start; align-items: center;">
+         <!--  <button (click)="productGo()" type="button" class="btn btn-secondary">Je valide</button> -->
+        </div>
+
+        <div *ngIf="infos.product.photos>1" class="row imagetiles" style="padding-top:25px;padding-left:100px;">
+          <div *ngFor="let img of infos.image; index as i" class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+              <img [src]="img" style="width: 95%;" class="img-responsive">
+              <span style="color: red;" (click)="delete(i)" class="delete hand">Supprimer</span>
+          </div>
+      </div>
+
+      </div>
+      <div class="hidden"><input type="file" accept="image/*" #file (change)="fileChangeEvent($event)"/></div>
+
+      
+      <ngx-photo-editor
+      [imageChangedEvent]="imageChangedEvent"
+      (imageCropped)="imageCropped($event)"
+      [aspectRatio]="infos.ratio"
+      [viewMode]="1"
+      [resizeToWidth]="0"
+      [resizeToHeight]="0"></ngx-photo-editor>
+
+      
+
+
+      
+
+    </div>
+  </div>
+
+
+<!-- Code begins here -->
+
+  <div  class="float">
+    <h5>{{getPanier().length}} Produit(s)</h5>
+    <h5>{{totalAmount() + (convertNumber(getFormat().price) || 0) }} F CFA</h5>
+
+    <div class="row pt-2">
+
+      <div class="col-sm" >
+        <button [disabled]="infos.image.length<1"  (click)="pay()" type="button" class="p-1 btn btn-success">Retourner au panier</button>
+      </div>
+    </div>
+  </div>
+
+
+
+

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FunctionsService } from '../services/functions.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ApiService } from '../services/api.service';
-import { CinetpayService } from '../services/cinetpay.service';
 import { NoticeService } from '../services/notice.service';
 
 
@@ -12,16 +11,18 @@ declare var CinetPay: any;
 //import 'https://www.cinetpay.com/cdn/seamless_sdk/latest/cinetpay.prod.min.js';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  selector: 'app-item',
+  templateUrl: './item.component.html',
+  styleUrls: ['./item.component.scss']
   
 })
-export class ProductComponent implements OnInit {
+export class ItemComponent implements OnInit {
   sub : any;
+  attribut : any;
   product : any;
   item : any;
   image : any;
+  note : any;
   bannerImg: any;
   infos: any = [];
   quantity : string = "1";
@@ -31,6 +32,8 @@ export class ProductComponent implements OnInit {
   format: any;
   myCart: any = [];
   images : any = []
+  checker : any;
+  priceVrai: any;
 
 
   constructor(
@@ -57,6 +60,105 @@ export class ProductComponent implements OnInit {
     });
   }
 
+
+  showFormats(item){
+    let show = "";
+      item.forEach(element => {
+        if(show == ""){
+          show = element.name;
+        }
+        else{
+          show = show+ "/" +element.name;
+        }
+        
+      });
+      console.log(show)
+      return show;
+
+  }
+
+  handleChanged(format){
+    console.log("format", format)
+    if(localStorage.getItem('is_user_format')){
+     // console.log(localStorage.getItem('is_user_format'));
+      localStorage.removeItem('is_user_format');
+      localStorage.setItem('is_user_format', JSON.stringify(format));
+      //console.log(localStorage.getItem('is_user_format'));
+    }
+    else{
+      localStorage.setItem('is_user_format', JSON.stringify(format));
+    }
+    this.priceVrai = format.price;
+  }
+
+  onChange(item){
+    this.infos.formats.forEach(element => {
+      if(element.id == item){
+      console.log(element)
+      this.real_price = element.price;
+      this.priceVrai = element.price;
+      if(localStorage.getItem('is_user_format')){
+        // console.log(localStorage.getItem('is_user_format'));
+         localStorage.removeItem('is_user_format');
+         localStorage.setItem('is_user_format', JSON.stringify(element));
+         //console.log(localStorage.getItem('is_user_format'));
+       }
+       else{
+         localStorage.setItem('is_user_format', JSON.stringify(element));
+       }
+      }
+    });
+
+
+  }
+
+ productGo(item){
+  if(this.checker!=undefined){
+      let params = {
+        id : item
+      }
+      if(this.infos.attributs?.length>1){
+        if(this.attribut == null || this.attribut == undefined || this.attribut == ""){
+          this.notice.showError("Veuillez choisir une option pour continuer.", "Erreur")
+        }
+        else{
+          if(localStorage.getItem('is_user_infos')!=null){
+            this.note = "Option :"+this.attribut;
+            localStorage.setItem('is_user_note', this.note);
+            console.log(localStorage.getItem('is_user_note'))
+            this.functions.goToProduct("/charger", params);
+          }
+          else{
+            this.checkLogin();
+          }
+        }
+      }
+      else{
+        //this.note = "R";
+        if(localStorage.getItem('is_user_infos')!=null){
+          localStorage.setItem('is_user_note', this.note);
+          console.log(localStorage.getItem('is_user_note'))
+          this.functions.goToProduct("/charger", params);
+        }
+        else{
+          this.checkLogin();
+        }
+
+      }
+
+    }
+    else{
+      this.notice.showError("Veuillez choisir un format pour continuer.", "Erreur")
+    } 
+
+  } 
+
+  getPrice(){
+
+  }
+
+
+
   decrement(){
     if(parseInt(this.quantity)>1){
       let vl = parseInt(this.quantity)-1;
@@ -65,14 +167,7 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  onChange(item){
-    this.infos.formats.forEach(element => {
-      if(element.id == item){
-      console.log(element)
-      this.real_price = element.price;
-      }
-    });
-  }
+
 
   increment(){
     let vl = parseInt(this.quantity)+1;
@@ -85,7 +180,8 @@ export class ProductComponent implements OnInit {
       id : product
     }
     this.serviceApi.getDatas("getproduit", data).subscribe( async (da:any)=>{
-      console.log("produit", da.data);
+      console.log("produit ici et ici ", da.data);
+      console.log("Attributs ici et ici ", da.data[0].attributs);
       this.infos = da.data[0];
       this.real_price = da.data[0].r_price;
       this.images = JSON.parse(localStorage.getItem('temp_image'));

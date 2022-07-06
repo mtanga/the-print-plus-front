@@ -52,11 +52,13 @@
                             <h3 class="t-3">Quantité : </h3>
                         </div>
                         <div class="col-md-5 col-md-offset-1 col-sm-5 col-xs-5">
-                            <div class="input-group mb-3">
-                                <span (click)="decrement()" class="hand input-group-text">-</span>
-                                <input type="text" [(ngModel)]="quantity" name="quantity" class="form-control" [value]="quantity" aria-label="Dollar amount (with dot and two decimal places)">
-                                <span (click)="increment()" class="hand input-group-text">+</span>
-                              </div>
+                            <form>
+                                <div class="input-group mb-3">
+                                    <span (click)="decrement()" class="hand input-group-text">-</span>
+                                    <input type="text" [(ngModel)]="quantity" name="quantity" class="form-control" [value]="quantity" >
+                                    <span (click)="increment()" class="hand input-group-text">+</span>
+                                </div>
+                            </form>
                         </div>
 <!--                         <div class="col-md-3 col-md-offset-1 col-sm-3 col-xs-3">
                             

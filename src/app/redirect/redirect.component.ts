@@ -41,9 +41,10 @@ export class RedirectComponent implements OnInit {
     this.new_product = [];
     this.product.forEach(element => {
       let product = {
-        format : parseInt(element.format) || 0,
+        format : element.format,
         id : element.product.id,
-        images : element.image
+        images : element.image,
+        note : element.product.note
       }
       this.new_product.push(product);
     });

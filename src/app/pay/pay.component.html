@@ -18,9 +18,16 @@
               </div>
               <span class="text-muted">{{total(item.price, item.qte)}} F CFA</span>
             </li>
+            <li  class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Livraison : {{itemDel.name}}</h6>
+                <small class="text-muted">{{itemDel.description}}</small>
+              </div>
+              <span class="text-muted">{{itemDel.price || 0}} F CFA</span>
+            </li>
             <li class="list-group-item d-flex justify-content-between">
               <span>Total à payer</span>
-              <strong>{{totalAmount()}} F CFA</strong>
+              <strong>{{totalAmount() + (itemDel.price || 0) }} F CFA</strong>
             </li>
           </ul>
           <button [disabled]="check_profile_completed() === true"  (click)="buyNow()" style="width: 100%;" class="btn btn-primary btn-lg btn-block" type="btn">Valider et payer maintenant</button>
@@ -64,7 +71,7 @@
                   </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-4 mb-3">
+<!--                     <div class="col-md-4 mb-3">
                       <label for="firstName">Pays</label>
                       <select [(ngModel)]="infos.pays" name="pays" class="form-control" aria-label=".form-select-lg example">
                         <option [value]="infos.pays">{{infos.pays || "Veuillez sélectionner un pays"}}</option>
@@ -73,7 +80,7 @@
                       <div class="invalid-feedback">
                         Valid first name is required.
                       </div>
-                    </div>
+                    </div> -->
                       <div class="col-md-4 mb-3">
                         <label for="lastName">Région</label>
                         <input type="text" class="form-control" [(ngModel)]="infos.region" name="region" [value]="infos.region" required>
@@ -88,48 +95,47 @@
                           Valid first name is required.
                         </div>
                       </div>
-                  </div>
-                  <div class="row">   
-                      <div class="col-md-6 mb-3">
-                          <label for="lastName">Boite postale <span class="text-muted">(Facultif)</span></label>
-                          <input type="text" class="form-control" [(ngModel)]="infos.po" name="po" [value]="infos.po" required>
-                          <div class="invalid-feedback">
-                              Valid last name is required.
-                          </div>
-                      </div>
-                      <div class="col-md-6 mb-3">
-                          <div class="mb-3">
-                              <label for="address">Addresse</label>
-                              <input type="text" class="form-control" [(ngModel)]="infos.rue" name="rue" [value]="infos.rue" required>
-                              <div class="invalid-feedback">
-                                Please enter your shipping address.
-                              </div>
-                            </div>
+                      <div class="col-md-4 mb-3">
+                        <label for="address">Quatier</label>
+                        <input type="text" class="form-control" [(ngModel)]="infos.rue" name="rue" [value]="infos.rue" required>
+                        <div class="invalid-feedback">
+                          Please enter your shipping address.
+                        </div>
                       </div>
                   </div>
-<!-- 
-                  <div class="form-check mb-3">
-                    <input (change)="handleChange($event)" class="form-check-input" [(ngModel)]="edit_add" name="edit_add" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">
-                      Je souhaie changer d'adresse.
-                    </label>
-                  </div> -->
 
                  
                   <button *ngIf="!check_profile_completed()" type="submit" class="btn btn-info">Modifier</button>
 
-  <!--           <hr class="mb-4">
+            <hr class="mb-4">
             <h4 class="mb-3">Information de livraison</h4>
             <div class="my-3">
                 <div class="form-check">
-                  <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
+                  <input (change)="handleChanged($event)" id="liv" name="liv" type="radio" class="form-check-input" value="domicile" checked required>
                   <label class="form-check-label" for="credit">Livraison à domicile</label>
                 </div>
                 <div class="form-check">
-                  <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
+                  <input (change)="handleChanged($event)" id="liv" name="liv" type="radio" value="partenaire" class="form-check-input" required>
                   <label class="form-check-label" for="debit">Retrait à l'agence</label>
                 </div>
-              </div> -->
+              </div> 
+              <div class="my-3">
+                <div class="">
+                  <select *ngIf="delivery_type=='domicile'" [(ngModel)]="select_box" name="select_box" class="form-select" id="select_box" (change)="onChange($event)">
+                    <option class="dropdown-item" disabled selected value="undefined">Selectionnez une méthode de livraison</option>
+                    <option *ngFor="let point of pointsD;" value="{{point.id}}">{{point.name}}</option>
+                   
+                  </select>
+                  <select *ngIf="delivery_type=='partenaire'" [(ngModel)]="select_box" name="select_box" class="form-select" id="select_box" (change)="onChange($event)">
+                    <option class="dropdown-item" disabled selected value="undefined">Selectionnez une méthode de livraison</option>
+                    <option *ngFor="let point of pointsP;" value="{{point.id}}">{{point.name}}</option>
+                   
+                  </select>
+                </div>
+
+
+              </div> 
+
           </form>
         </div>
       </div>

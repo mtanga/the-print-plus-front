@@ -171,7 +171,7 @@
             </div>
             <div  *ngIf="tab=='orders'" class="col-md-8">
               <h4>Mes commandes</h4>
-              <div *ngIf="!orders">
+              <div *ngIf="orders?.length==0">
                 <p>Aucune commande trouvées sur votre compte.</p>
               </div>
               <ol class="list-group list-group-numbered">

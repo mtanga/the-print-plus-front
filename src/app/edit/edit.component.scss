@@ -1,39 +1,24 @@
 
 
 *{padding:0;margin:0;}
-.container{
-    position:fixed;
-    background: #f6f6f6;
-    color: white;
-    height: 100%;
-}
-
-@media (min-width: 1400px){
-    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-        max-width: 100%;
-    }
-}
-
 
 body{
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:18px;
-    background-color:#CCC;
- 
+	background-color:#CCC;
 }
 
 .float{
-    position: fixed;
-    width: 600px;
-    height: 200px;
-    bottom: 0px;
-    right: 0px;
-    background-color: #ECECEC;
-    color: #FFF;
-    text-align: left;
-    padding-top: 50px;
-    padding-left: 20px;
-    border-radius: 5px;
+	position:fixed;
+	width:300px;
+	height:110px;
+	bottom:40px;
+	right:40px;
+	background-color:#00B0EF;
+	color:#FFF;
+    text-align:left;
+    padding: 10px;
+	box-shadow: 2px 2px 3px #999;
 }
 
 .my-float{
@@ -61,10 +46,10 @@ body{
 
 
 .add-bg{
+    background-color: #ECECEC;
     border-radius:15px;
     height: 400px;
     vertical-align: middle;
-    margin-top: -150px;
 }
 
 .add-img{

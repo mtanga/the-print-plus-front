@@ -33,18 +33,28 @@ export class DecoComponent implements OnInit {
     })
   }
 
+
+
   showFormats(item){
+    //console.log(item);
     let show = "";
-    item.forEach(element => {
-      if(show ==""){
-        show = element.name;
-      }
-      else{
-        show = show+ "," +element.name;
-      }
-      
-    });
-    return show
+    if(item.length>3){
+      //show = 
+      return "Choix multiples";
+    }
+    else{
+      item.forEach(element => {
+        if(show == ""){
+          show = element.name;
+        }
+        else{
+          show = show+ "/" +element.name;
+        }
+        
+      });
+      console.log(show)
+      return show;
+    }
   }
   
 
@@ -58,11 +68,14 @@ export class DecoComponent implements OnInit {
     })
   }
 
+
+
+
   productGo(item){
     let params = {
       id : item
     }
-    this.functions.goToProduct("/charger", params);
+    this.functions.goToProduct("/item", params);
   }
 
 }

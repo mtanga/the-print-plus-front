@@ -36,7 +36,8 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { CartComponent } from './cart/cart.component';
 import { SearchComponent } from './search/search.component';
 import { RedirectComponent } from './redirect/redirect.component';
-
+import { ItemComponent } from './item/item.component';
+import { EditComponent } from './edit/edit.component';
 //676734912177-5t60ddc1ias75s49rdfdm7bdk8ul706r.apps.googleusercontent.com => id
 //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 => code secret
 // theprintplus237@gmail.com
@@ -69,7 +70,9 @@ import { RedirectComponent } from './redirect/redirect.component';
     ComingSoonComponent,
     CartComponent,
     SearchComponent,
-    RedirectComponent
+    RedirectComponent,
+    ItemComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +81,7 @@ import { RedirectComponent } from './redirect/redirect.component';
     NgxPhotoEditorModule,
     NgbModule,
     BrowserAnimationsModule,
+    //FontAwesomeModule,
     FormsModule,
     ToastrModule.forRoot(),
     InternationalPhoneNumberModule

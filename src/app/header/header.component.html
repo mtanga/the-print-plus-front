@@ -1,44 +1,114 @@
+
 <header class="bg-white text-white" >
     <div class="container" >
-      <div  class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <div  class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="padding-top: 25px;padding-bottom: 25px;">
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" class="nav-link px-2 text-secondary">
-              <img src="../../assets/img/logo.png" style="margin-left: -16px;" width="100">
+              <img src="../../assets/img/logo-new.png" style="margin-left: -16px;" width="100">
           </a></li>
         </ul>
         <div class="text-end">
             <a > <span class="phone text-login"> (+237) 699 000 333 - (+237) 6799 000 333</span></a>
             <a [routerLink]="['/rechercher']"> <span class="me-2 text-login text-white text-sm-center"> <img src="../../assets/img/search.svg" width="22"></span></a>
-            <a [routerLink]="['/mon-panier']"> <span class="me-2 text-login text-white"><img src="../../assets/img/cart.svg" width="22"></span></a>
+           
+            <span class="fa-stack fa-2x has-badge" data-count="4">
+                {{product?.length || 0}}
+              </span>
+
+            <a [routerLink]="['/mon-panier']"> <span class="me-2 text-login text-white"><img src="../../assets/img/cart.svg" width="22"></span>
+            </a>
             <a [routerLink]="['/mon-compte']"><button type="button" class="btn btn-primary-custom"><img src="../../assets/img/account.svg" width="22"></button></a>
         </div>
       </div>
       <!--Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-white bg-white-o p-3">
-            <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class=" collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ms-auto ">
-                <li class="nav-item">
-                    <a class="nav-link mx-2 active" aria-current="page"  [routerLink]="['tirages-photos']" >Tirages photos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-2" [routerLink]="['/deco-murale']">Déco murale</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-2" [routerLink]="['/accessoires']">Accéssoires</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-2" [routerLink]="['/coming-soon']">Livres photos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-2" [routerLink]="['/coming-soon']">Calendriers</a>
-                </li>
+
+
+<!--       <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </nav> -->
+   <!--    <div class="collapse" id="navbarToggleExternalContent">
+        <div class="bg-dark p-4">
+          <h5 class="text-white h4">Collapsed content</h5>
+          <span class="text-muted">Toggleable via the navbar brand.</span>
+        </div>
+      </div> -->
+
+
+      <nav *ngIf="get_route()!='/charger'" class="navbar navbar-expand-lg navbar-white bg-white-o p-3">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+          Menu<!-- <span class="navbar-toggler-icon">Menu</span> -->
+        </button>
+
+
+<!--         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+          <ul class="navbar-nav ml-auto">
+              <!--Tirage Pohtos-->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"[routerLink]="['tirages-photos']" >
+                    Tirages photos
+                    <i class="fas fa-angle-down fa-lg"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <li *ngFor="let item of tirage;">
+                      <a class="dropdown-item" [routerLink]="['item']" [queryParams]="{id: item.id}">{{item.name}}</a>
+                  </li>
                 </ul>
-            </div>
-            </div>
-        </nav>
+            </li>
+
+            <!-- Déco murale-->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" [routerLink]="['/deco-murale']" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Déco murale
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <li class="dropdown-submenu" ><a class="dropdown-item dropdown-toggle" href="#">Tirage papier photo jet d’encre</a>
+                    <ul class="dropdown-menu rigth-b">
+                      <li *ngFor="let item of deco;">
+                          <a class="dropdown-item" [routerLink]="['item']" [queryParams]="{id: item.id}">{{item.name}}</a>
+                        </li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Tirage papier photo jet d’encre sur support</a>
+                    <ul class="dropdown-menu">
+                      <li *ngFor="let item of infoss;">
+                          <a class="dropdown-item" [routerLink]="['item']" [queryParams]="{id: item.id}">{{item.name}}</a>
+                        </li>
+                    </ul>
+                  </li>
+                </ul>
+                
+              </li>
+
+            <!-- Accessoires-->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"[routerLink]="['/accessoires']" >
+                    Accéssoires
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                  <li *ngFor="let item of acc;">
+                      <a class="dropdown-item" [routerLink]="['item']" [queryParams]="{id: item.id}">{{item.name}}</a>
+                  </li>
+                </ul>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" [routerLink]="['/coming-soon']">Livres photos</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" [routerLink]="['/coming-soon']">Calendriers</a>
+            </li>
+          </ul>
+        </div>
+      </nav> 
     </div>
   </header>
+
+
+
+

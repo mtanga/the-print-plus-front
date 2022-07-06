@@ -8,14 +8,12 @@ import { NoticeService } from '../services/notice.service';
 
 import { filter, pairwise } from 'rxjs/operators';
 
-
-
 @Component({
-  selector: 'app-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss']
 })
-export class AddComponent implements OnInit {
+export class EditComponent implements OnInit {
   imageChangedEvent: any;
   base64: any;
   uploaded : boolean = false
@@ -27,7 +25,8 @@ export class AddComponent implements OnInit {
   nombre_fois : any = 0;
   previous_url : any;
   totalt: number;
-  myCart: any = [];
+  myCart: any;
+  id: number;
 
   constructor( 
     private route : ActivatedRoute,
@@ -51,8 +50,8 @@ export class AddComponent implements OnInit {
     this.sub = this.route
     .queryParams
     .subscribe( params  => {
-      this.product = parseInt(params['id']);
-      this.getProduct(this.product);
+      this.id = parseInt(params['id']);
+      this.getProduct(this.id);
     });
   }
 
@@ -62,16 +61,13 @@ export class AddComponent implements OnInit {
     var test = localStorage.getItem('the_print_cart');
     let arr = JSON.parse(test);
   //  console.log('mon tableau', arr)
-  console.log("ici et ici : ", arr)
-    if(arr = null){
-      for (let i=0;i<arr.length;i++){
-        let totalP = 0;
-        totalP = arr[i].qte * arr[i].price;
-        this.totalt = this.totalt+(arr[i].qte * arr[i].price);
-        //console.log('mon i:',i, totalP);
-        //console.log('mon total',this.totalt);
-      }
-    }
+    for (let i=0;i<arr.length;i++){
+      let totalP = 0;
+      totalP = arr[i].qte * arr[i].price;
+      this.totalt = this.totalt+(arr[i].qte * arr[i].price);
+      //console.log('mon i:',i, totalP);
+      //console.log('mon total',this.totalt);
+    } 
     return this.totalt;
   }
 
@@ -94,23 +90,36 @@ export class AddComponent implements OnInit {
     this.products = JSON.parse(test);
     //console.log()
     return this.products;
-    console.log()
+   // console.log()
     //this.delivery_points();
   }
 
 
   getProduct(product: any) {
-       let data = {
-      id : product
-    }
-    this.serviceApi.getDatas("getproduit", data).subscribe( async (da:any)=>{
-     // console.log("Mon produit", da.data);
-      console.log(da.data[0].photos);
-      this.infos = da.data[0];
-    })
+    console.log(this.getPanier());
+    console.log(product);
+    this.infos = this.getPanier()[product];
+    console.log("produitImage", this.infos.image);
+    console.log("produitImage", this.infos.photos);
+    console.log("produit1", this.infos.product);
   }
 
+  delete(i){
+    if(confirm("Êtes vous sûr de vouloir supprimer cette image ?")) {
+      
+      let arr = this.getPanier();
+      arr.forEach((currentValue, index) => {
+        if(index==this.id) {
+          console.log("nouveaux", currentValue);
+          currentValue.image.splice(i, 1);
+          localStorage.setItem('the_print_cart', JSON.stringify(arr));
+          console.log("nouveau", this.getPanier());
+          this.infos = this.getPanier()[this.id];
+        }
+      }); 
+    }
 
+  }
 
   
   fileChangeEvent(event: any) {
@@ -121,10 +130,12 @@ export class AddComponent implements OnInit {
 
   imageCropped(event: CroppedEvent) {
     this.base64 = event.base64;
-    this.images.push(this.base64);
-    this.nombre_fois = this.nombre_fois + 1;
-    console.log(this.images);
-    console.log(this.nombre_fois)
+    //this.images.push(this.base64);
+    let array = this.getPanier();
+    array[this.id].image.push(this.base64);
+    localStorage.setItem('the_print_cart', JSON.stringify(array));
+    this.infos = this.getPanier()[this.id];
+
   }
 
   productGo(id){
@@ -137,13 +148,7 @@ export class AddComponent implements OnInit {
   }
 
 
-  delete(img){
-    if(confirm("Êtes vous sûr de vouloir supprimer cette image ?")) {
-      console.log(img);
-      this.images.splice(img, 1);
-      this.nombre_fois = this.nombre_fois - 1;
-    }
-  }
+
 
   add_to_cart(product){
     if(this.infos.formats?.length > 0){
@@ -239,83 +244,8 @@ export class AddComponent implements OnInit {
 
 
 
-  pay(product){
-    if(this.infos.formats?.length > 0){
-/*       if(this.format == null){
-        this.notice.showError("Veuillez choisir un format", "Format invalide")
-      } */
-      //else{
-        if(localStorage.getItem('is_user_infos')!=null){
-          var test = localStorage.getItem('the_print_cart');
-          let arr = JSON.parse(test);
-          let data ={
-            product : product,
-            qte : 1,
-            note : localStorage.getItem('is_user_note'),
-            format : this.getFormat().name,
-            image : this.images,
-            price : this.convertNumber(this.getFormat().price),
-            id :  'cart_' + Math.random().toString(36).substr(2, 9),
-          }
-          if(arr==null){
-            this.myCart.push(data);
-            let json = JSON.stringify(this.myCart);
-            localStorage.setItem('the_print_cart', json);
-            this.notice.showSuccess("Produit ajouté au panier avec succès", "Mon panier");
-            this.router.navigate(['/mon-panier']);
-            //this.productGo(product.id);
-          }
-          else{
-            arr.push(data);
-            let json = JSON.stringify(arr);
-            localStorage.setItem('the_print_cart', json);
-            this.notice.showSuccess("Produit ajouté au panier avec succès", "Mon panier");
-            this.router.navigate(['/mon-panier']);
-            //this.productGo(product.id);
-          }
-        }
-        else{
-              this.checkLogin();
-        }
-    
-     // }
-      
-    }
-    else{
-      if(localStorage.getItem('is_user_infos')!=null){
-        var test = localStorage.getItem('the_print_cart');
-        let arr = JSON.parse(test);
-        let data ={
-          product : product,
-          qte : 1,
-          note : localStorage.getItem('is_user_note'),
-          format : this.getFormat().name,
-          image : this.images,
-          price : this.convertNumber(this.getFormat().price),
-          id :  'cart_' + Math.random().toString(36).substr(2, 9),
-        }
-        if(arr==null){
-          this.myCart.push(data);
-          let json = JSON.stringify(this.myCart);
-          localStorage.setItem('the_print_cart', json);
-          this.notice.showSuccess("Produit ajouté au panier avec succès", "Mon panier");
-          this.router.navigate(['/mon-panier']);
-          //this.productGo(product.id);
-        }
-        else{
-          arr.push(data);
-          let json = JSON.stringify(arr);
-          localStorage.setItem('the_print_cart', json);
-          this.notice.showSuccess("Produit ajouté au panier avec succès", "Mon panier");
-          this.router.navigate(['/mon-panier']);
-          //this.productGo(product.id);
-        }
-      }
-      else{
-            this.checkLogin();
-      }
-  
-      }
+  pay(){
+    this.router.navigate(['/mon-panier']);
   }
 
 

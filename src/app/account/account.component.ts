@@ -71,8 +71,10 @@ getorders(){
     user : this.user.id
   }
     this.serviceApi.getDatas("get_orders", data).subscribe( async (da:any)=>{
-      console.log(da);
+      console.log("orders",da.data);
       this.orders = da.data;
+      console.log("Longueur", this.orders.length)
+
       //this.getCountries();
     })
 }

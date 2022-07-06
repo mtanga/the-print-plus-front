@@ -13,10 +13,14 @@
     padding-bottom: 25px!important;
     padding-left: 0px!important;
 }
+.pb-custom{
+    padding-bottom: 2rem!important;
+}
 
 .title-blog{
     font-size: 2rem;
     font-weight: 600;
+    padding-bottom: 1rem;
 }
 @media only screen and (max-width: 720px) {
     .parent {
@@ -162,6 +166,7 @@ a{
     margin-top: 0;
     margin-bottom: 1rem;
     font-size: 1.35rem;
+    font-weight: 300;
 }
 
 .p-custom-img{
@@ -176,6 +181,10 @@ ml-d{
 }
 
 } 
+
+.pb-3{
+    padding-bottom: 2rem!important;
+}
 
 .meta{
     margin-top: -35px;

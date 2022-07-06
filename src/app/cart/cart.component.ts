@@ -1,20 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { timer } from 'rxjs';
+import { FunctionsService } from '../services/functions.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  product : any;
+  product : any ;
   format: any;
   qtee : number;
   totalt: number;
 
   constructor(
-    private router: Router
-  ) { }
+    private router: Router,
+    private functions : FunctionsService
+  ) { 
+
+  }
 
   ngOnInit(): void {
     this.getPanier();
@@ -23,17 +27,27 @@ export class CartComponent implements OnInit {
   getPanier(){
     var test = localStorage.getItem('the_print_cart');
     this.product = JSON.parse(test);
-    console.log(this.product);
+    console.log("Les produits", this.product);
   }
 
   pay(){
     this.router.navigate(['/paiement']);
   }
 
+  edit(item, id){
+    let params = {
+      id : id
+    }
+    //let json = JSON.stringify(item);
+    localStorage.setItem('cart_item_temp', JSON.stringify(item)); 
+    this.functions.goToProduct("/edit", params);
+  }
+
   getFormat(id, item){
-    //console.log(this.product)
+    console.log("id" ,id)
+    console.log("item" ,item)
     item.formats.forEach(element => {
-      if(element.id == id){
+      if(element.name == id){
      // console.log(element)
       this.format = element;
       }
@@ -90,18 +104,21 @@ export class CartComponent implements OnInit {
   }
 
   delete(items){
-    var test = localStorage.getItem('the_print_cart');
-    let arr = JSON.parse(test);
-    for (let i=0;i<arr.length;i++){
-      if(arr[i].id==items.id){
-        //console.log('le bon:', arr[i]);
-        //console.log('le bon index:', i);
-        arr.splice(i, 1);
-        let json = JSON.stringify(arr);
-        localStorage.setItem('the_print_cart', json); 
-        this.getPanier();
-      }
-  }
+    if(confirm("Êtes vous sûr de vouloir supprimer cette image ?")) {
+      var test = localStorage.getItem('the_print_cart');
+      let arr = JSON.parse(test);
+      for (let i=0;i<arr.length;i++){
+        if(arr[i].id==items.id){
+          //console.log('le bon:', arr[i]);
+          //console.log('le bon index:', i);
+          arr.splice(i, 1);
+          let json = JSON.stringify(arr);
+          localStorage.setItem('the_print_cart', json); 
+          this.getPanier();
+        }
+    }
+    }
+
 }
 
 totalAmount() {

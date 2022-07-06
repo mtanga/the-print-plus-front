@@ -25,7 +25,7 @@
             <img class="img-center"  src="../../assets/img/img.svg" width="50">
         </div>
         <div class="col-md-3 col-xs-3 col-sm-3 p-10 b-gray" >
-            <h6 class="text-center text-5">Livraison partout au Cameroun</h6>
+            <h6 class="text-center text-5">Livraison partout</h6>
             <img class="img-center"  src="../../assets/img/cmr.svg" width="30">
         </div>
     </div>
@@ -37,7 +37,7 @@
             <p class="para no-padding text-custom-black">Faites encadrer votre photo avec soin par notre équipe de professionnels ! Optez pour le cadre de votre choix parmi la sélection disponible sur notre boutique en ligne. Il n’y a aucune limite à votre imagination concernant le format, la couleur et le design, laissez-vous porter par vos moindres désirs en matière de décoration. </p>
         </div>
         <div>
-            <h4 style="color:#1E3259;font-weight: 700;font-size: 35px;">Tirage papier photo jet d’encre</h4>
+            <h4 style="color:#1E3259;font-weight: 700;font-size: 35px;padding-bottom: 25px;">Tirage papier photo jet d’encre</h4>
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col"  *ngFor="let item of infos;">
                     <div (click)="productGo(item.id)" class="hand card">
@@ -47,11 +47,11 @@
                             <div class="">
                             <p class="card-text product-title">{{item.name}}</p><br/>
                             <div class="meta">
-                                <p>
-                                    <!-- <span><b>Format ({{item.formats[0].unit || '' }}) :</b> {{showFormats(item.formats)}}</span> -->
+                                <p >
+                                    <span><b>Format ({{item.formats[0].unit || '' }}) :</b> {{showFormats(item.formats)}}</span>
                                     
                                     <br><span>
-                                        À partir de <span class="price"><b>{{item.r_price}}</b></span>
+                                        À partir de <span class="price"><b>{{item.r_price}} FCFA</b></span>
                                     </span>
                                 </p>
                             </div>
@@ -64,10 +64,10 @@
             </div>
 
 
-            <h4 style="color:#1E3259;font-weight: 700;font-size: 35px;padding-top: 25px;">Tirage papier photo jet d’encre sur support</h4>
+            <h4 style="color:#1E3259;font-weight: 700;font-size: 35px;padding-top: 25px;padding-bottom: 25px;">Tirage papier photo jet d’encre sur support</h4>
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col"  *ngFor="let items of infoss;">
-                    <div class="hand card">
+                    <div (click)="productGo(items.id)" class="hand card">
                         <img src="https://admin.theprintplus-cm.com{{items.file_path}}"  alt="Add post"  class="card-img-top img-center" />
                         <div class="card-body">
                         <div class="justify-content-between align-items-center">
@@ -75,10 +75,10 @@
                             <p class="card-text product-title">{{items.name}}</p><br/>
                             <div class="meta">
                                 <p>
-                                   <!--  <span><b>Format ({{items.formats[0].unit || ""}}) :</b> {{showFormats(items.formats) || ""}}</span> -->
+                                  <span><b>Format ({{items.formats[0].unit || ""}}) :</b> {{showFormats(items.formats) || ""}}</span> 
                                     
                                     <br><span>
-                                        À partir de <span class="price"><b>{{items.r_price}}</b></span>
+                                        À partir de <span class="price"><b>{{items.r_price}} FCFA</b></span>
                                     </span>
                                 </p>
                             </div>
@@ -119,7 +119,7 @@
             </div>
         </div> -->
 
-        <div class="row marge">
+        <div class="row marge pb-custom">
             <h1 class="heading no-pl pb-3 text-custom-black">Pourquoi developper vos photos sur papier ?</h1>
             <div class="col-md-6 col-xs-6 col-sm-6 ml-d no-pl">
                 <img class="p-custom-img" src="../../assets/img/img08.svg" >
@@ -135,7 +135,7 @@
 
 
 
-        <div class="row pt-5 marge">
+        <div class="row pt-5 marge pb-custom">
             <div class="col-md-6 col-xs-6 col-sm-6 mr-d no-pl">
                 <div class="">
                     <h3 class="title-blog text-custom-black">Revivre vos plus beaux voyages depuis votre canapé</h3>
@@ -147,7 +147,7 @@
             </div>
         </div>
 
-        <div class="row pt-5 parent marge">
+        <div class="row pt-5 parent marge pb-custom">
             <div class="col-md-6 col-xs-6 col-sm-6 ml-d no-pl">
                 <img class="p-custom-img" src="../../assets/img/img10.svg" >
             </div>

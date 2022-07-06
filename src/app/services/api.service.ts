@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse,HttpEvent, HttpParams, HttpRequest, HttpH
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { NoticeService } from './notice.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,8 @@ export class ApiService {
 
   constructor(
     private http: HttpClient,
-    private router : Router
+    private router : Router,
+    private notice : NoticeService,
     
     
     ) {     }
@@ -57,8 +59,11 @@ isConnected(){
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);
+      console.log("reeeeeeeee")
+      this.notice.showError("Votre demande ne peut être éxécuté actuellement. Veuillez réessayer ultérieurement!", "Serveur non joignable")
      // this.presentToast(error.error.message);
     } else {
+      console.log("reeeeeeeee2")
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
       console.error(

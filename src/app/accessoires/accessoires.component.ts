@@ -49,7 +49,7 @@ export class AccessoiresComponent implements OnInit {
     let params = {
       id : item
     }
-    this.functions.goToProduct("/charger", params);
+    this.functions.goToProduct("/item", params);
   }
 
 }

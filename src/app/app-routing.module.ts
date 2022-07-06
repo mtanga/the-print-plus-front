@@ -11,8 +11,10 @@ import { CgvComponent } from './cgv/cgv.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { DecoComponent } from './deco/deco.component';
 import { DeliveryComponent } from './delivery/delivery.component';
+import { EditComponent } from './edit/edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
+import { ItemComponent } from './item/item.component';
 import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { NoticeComponent } from './notice/notice.component';
@@ -106,6 +108,14 @@ const routes: Routes = [
      component: CgvComponent 
    },
    { 
+    path: 'edit', 
+    component: EditComponent 
+  },
+   { 
+    path: 'item', 
+    component: ItemComponent 
+  },
+   { 
     path: 'notice', 
     component: NoticeComponent 
   },
@@ -124,7 +134,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', useHash:true })],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'disabled', useHash:true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

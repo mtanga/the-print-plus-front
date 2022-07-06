@@ -78,10 +78,12 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser(data, url){
-    this.serviceApi.login(data, url).subscribe( async (da:any)=>{
+    //console.log("erreur",  this.serviceApi.login(data, url));
+    this.serviceApi.login(data, url).subscribe(async (da:any)=>{
+      console.log("erreur",  da);
      if(da.user){
         let text = "Hello "+da.user.fisrt_name;
-        this.notice.showSuccess(text, "Connexion 'reussie ")
+        this.notice.showSuccess(text, "Connexion réussie ")
         localStorage.setItem('is_user_infos', JSON.stringify(da.user));
         if(localStorage.getItem('current_url')){
           var url = localStorage.getItem('current_url');
@@ -93,7 +95,7 @@ export class LoginComponent implements OnInit {
           console.log("type", current_url.type);
           //if(current_url.type){
               localStorage.removeItem('current_url');
-              this.functions.goToProduct("/produit", params);
+              this.functions.goToProduct("/item", params);
           //}
         //  else{
          ///   this.router.navigate(['/mon-compte']);
@@ -103,6 +105,9 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/mon-compte']);
           }
      }
+/*      else if (){
+
+     } */
      else{
       this.notice.showError("Vos information de connexions sont incorrectes", "Statut de votre compte")
      }
