@@ -1,0 +1,33 @@
+<div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-3">
+        <div class="col" *ngFor="let images of imagesItem;">
+          <div class="card shadow-sm">
+            <img [src]="images.url"  alt="Add post"  class="card-img-top img-center" />
+            <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a [href]="images.url" target="_blank" class="btn btn-sm btn-outline-secondary">Télécharger</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #customLoadingTemplate>
+        <div class="custom-class">
+         
+        </div>
+      </ng-template>
+      <ngx-loading
+      [show]="loading"
+      [config]="{ backdropBorderRadius: '3px' }"
+      [template]="customLoadingTemplate"
+    ></ngx-loading>
+
+    </div>
+
+
+  </div>

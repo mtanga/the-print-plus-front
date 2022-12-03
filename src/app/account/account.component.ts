@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FunctionsService } from '../services/functions.service';
 import { ApiService } from '../services/api.service';
 import { NoticeService } from '../services/notice.service';
 
@@ -25,19 +26,55 @@ export class AccountComponent implements OnInit {
   infos: any;
   phone : any;
   myData: any[];
-  orders: any;
 
+  steps : any = [
+    {
+      item : "Paiement confirmeé",
+      id : "ACCEPTED"
+    },
+    {
+      item : "En cours de traitement",
+      id : "BeingProcessed"
+    },
+    {
+      item : "Commande traitée",
+      id : "Processed"
+    },
+    {
+      item : "En cours de livrraison",
+      id : "BeingDelivered"
+    },
+    {
+      item : "Commande livrée",
+      id : "Delivered"
+    }
+
+  ]
+  orders: any;
+  sub: any;
+  public loading = false;
 
   constructor(
     private serviceApi : ApiService,
     private notice : NoticeService,
     private router: Router,
+    private route : ActivatedRoute,
     private http: HttpClient,
+    private functions : FunctionsService
   ) { }
 
   ngOnInit(): void {
+    this.sub = this.route
+    .queryParams
+    .subscribe( params  => {
+      let reloa = parseInt(params['id']);
+      if(reloa){
+        window.location.reload();
+      }
+    });
     this.user = JSON.parse(localStorage.getItem('is_user_infos'));
     console.log(this.user);
+    this.loading = true;
     this.getAdresse(this.user.id);
   }
 
@@ -54,6 +91,24 @@ export class AccountComponent implements OnInit {
   });
   }
 
+
+  onCountryChange($event){
+    console.log("onCountryChange", $event );
+  }
+
+  getNumber($event){
+    console.log("Get number", $event );
+    this.phone = $event;
+
+  }
+
+  telInputObject($event){
+    console.log("telInputObject", $event );
+  }
+
+  hasError($event){
+    this.phone=null 
+  }
 
 getAdresse(user: any) {
   let data = {
@@ -74,7 +129,7 @@ getorders(){
       console.log("orders",da.data);
       this.orders = da.data;
       console.log("Longueur", this.orders.length)
-
+      this.loading = false;
       //this.getCountries();
     })
 }
@@ -96,6 +151,13 @@ logout(){
   this.router.navigate(['/connexion']);
 }
 
+showImage(item){
+  let params = {
+    id : item.id
+  }
+  this.functions.goToProduct("/details", params);
+}
+
   profile(f){
     let data ={
       last_name : f.form.value.nom,
@@ -114,7 +176,7 @@ logout(){
     let data = {
       pays : f.form.value.pays,
       ville : f.form.value.ville,
-      phone : f.form.value.phone,
+      phone : this.phone,
       region : f.form.value.region,
       po : f.form.value.po,
       rue : f.form.value.rue,

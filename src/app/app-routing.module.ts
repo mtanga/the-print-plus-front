@@ -11,6 +11,8 @@ import { CgvComponent } from './cgv/cgv.component';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { DecoComponent } from './deco/deco.component';
 import { DeliveryComponent } from './delivery/delivery.component';
+import { DetailComponent } from './detail/detail.component';
+import { DetailsComponent } from './details/details.component';
 import { EditComponent } from './edit/edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
@@ -18,12 +20,14 @@ import { ItemComponent } from './item/item.component';
 import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { NoticeComponent } from './notice/notice.component';
+import { PartnersComponent } from './partners/partners.component';
 import { PayComponent } from './pay/pay.component';
 import { ProductComponent } from './product/product.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetComponent } from './reset/reset.component';
 import { SearchComponent } from './search/search.component';
+import { SuccessComponent } from './success/success.component';
 
 
 
@@ -75,6 +79,14 @@ const routes: Routes = [
         component: AccessoiresComponent 
     },
     { 
+      path: 'detail', 
+      component: DetailComponent 
+  },
+    { 
+      path: 'details', 
+      component: DetailsComponent 
+  },
+    { 
           path: 'livres-photos', 
           //component: BookComponent 
           component: ComingSoonComponent 
@@ -86,7 +98,6 @@ const routes: Routes = [
     },
     { 
       path: 'mon-panier', 
-      canActivate: [AuthGuard],
       component: CartComponent 
     },
     { 
@@ -102,6 +113,14 @@ const routes: Routes = [
     { 
       path: 'produit', 
       component: ProductComponent 
+    },
+    { 
+      path: 'success', 
+      component: SuccessComponent 
+    },
+    { 
+      path: 'partners', 
+      component: PartnersComponent 
     },
    { 
      path: 'cgv', 
@@ -134,7 +153,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'disabled', useHash:true })],
+  imports: [
+    RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

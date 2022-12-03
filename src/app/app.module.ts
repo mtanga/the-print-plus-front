@@ -18,7 +18,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { SubcategoryComponent } from './subcategory/subcategory.component';
 import { AddComponent } from './add/add.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxPhotoEditorModule} from "ngx-photo-editor";
 import { DecoComponent } from './deco/deco.component';
 import { AccessoiresComponent } from './accessoires/accessoires.component';
@@ -38,10 +38,31 @@ import { SearchComponent } from './search/search.component';
 import { RedirectComponent } from './redirect/redirect.component';
 import { ItemComponent } from './item/item.component';
 import { EditComponent } from './edit/edit.component';
+
+
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
 //676734912177-5t60ddc1ias75s49rdfdm7bdk8ul706r.apps.googleusercontent.com => id
 //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 => code secret
 // theprintplus237@gmail.com
 // Mot de passe : DokotiStudio237
+import {Ng2TelInputModule} from 'ng2-tel-input';
+import { environment } from 'src/environments/environment';
+
+
+import { ngxLoadingAnimationTypes, NgxLoadingModule } from "ngx-loading";
+import { DetailsComponent } from './details/details.component';
+import { DetailComponent } from './detail/detail.component';
+import { SuccessComponent } from './success/success.component';
+import { PartnersComponent } from './partners/partners.component';
+import {JpImagePreloadModule} from '@jaspero/ng-image-preload';
+
+
+
 
 @NgModule({
   declarations: [
@@ -72,24 +93,47 @@ import { EditComponent } from './edit/edit.component';
     SearchComponent,
     RedirectComponent,
     ItemComponent,
-    EditComponent
+    EditComponent,
+    DetailsComponent,
+    DetailComponent,
+    SuccessComponent,
+    PartnersComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     NgxPhotoEditorModule,
-    NgbModule,
+    //NgbModule,
     BrowserAnimationsModule,
+    Ng2TelInputModule,
     //FontAwesomeModule,
+    HttpClientModule,
     FormsModule,
     ToastrModule.forRoot(),
-    InternationalPhoneNumberModule
+    JpImagePreloadModule.forRoot(),
+    InternationalPhoneNumberModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    AngularFirestoreModule.enablePersistence(),
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      backdropBackgroundColour: "rgba(0,0,0,0.1)",
+      backdropBorderRadius: "4px",
+      primaryColour: "#ffffff",
+      secondaryColour: "#ffffff",
+      tertiaryColour: "#ffffff",
+    }),
+    NgbModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [],
+  providers: [
+    NgbActiveModal
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -20,7 +20,16 @@
                                         </div>
                                         <div *ngIf="loginEmail===false" class="form-group mb-1">
                                             <label for="exampleInputEmail1">Téléphone</label>
-                                            <international-phone-number class="form-control" [(ngModel)]="phone_number" placeholder="Entrez votre numéro" [maxlength]="20" [defaultCountry]="'cm'" [locale]="'en'" [required]="true"  name="phone_number" ></international-phone-number>
+                                            <input type="text"
+                                            name="phone_number"
+                                            class="form-control phone"
+                                            ng2TelInput
+                                            [ng2TelInputOptions]="{initialCountry: 'cm'}"
+                                            (hasError)="hasError($event)"
+                                            (ng2TelOutput)="getNumber($event)"
+                                            (intlTelInputObject)="telInputObject($event)"
+                                            (countryChange)="onCountryChange($event)" />
+
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6">
@@ -58,8 +67,8 @@
                                               J'accepte les <a [routerLink]="['/cgv']" class="text-primary ml-1">termes et conditions du service.</a>
                                             </label> 
                                         </div>
-                                        <button *ngIf="loginEmail===true" type="btn" (click)="saveEmail()" class="btn btn-primary">Je crée non compte</button>
-                                        <button *ngIf="loginEmail===false" type="btn" (click)="savePhone()" class="btn btn-primary">Je crée non compte</button>
+                                        <button *ngIf="loginEmail===true" type="btn" (click)="saveEmail()" class="btn btn-primary">Je crée mon compte</button>
+                                        <button *ngIf="loginEmail===false" type="btn" (click)="savePhone()" class="btn btn-primary">Je crée mon compte</button>
                                     </form>
                                 </div>
                                 

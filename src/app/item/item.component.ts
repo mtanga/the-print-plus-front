@@ -18,10 +18,14 @@ declare var CinetPay: any;
 })
 export class ItemComponent implements OnInit {
   sub : any;
+  forme : any;
   attribut : any;
+  formatname : any;
   product : any;
+  selectcoloris : any;
   item : any;
   image : any;
+  selectimages : any;
   note : any;
   bannerImg: any;
   infos: any = [];
@@ -34,6 +38,22 @@ export class ItemComponent implements OnInit {
   images : any = []
   checker : any;
   priceVrai: any;
+  tailles: any;
+  taille: any;
+  havetaille: boolean;
+  types: any;
+  getformatss: boolean;
+  haveimages: boolean;
+  haveColoris: boolean;
+  oneType: any;
+  itemFormat: any;
+  itemTaille: any;
+  nb_img: any;
+  temp_cart_item: { imagesNumber: any; format: any; taille: any; };
+  promoPrice: number;
+  promoItem: any;
+  promoPricing: number;
+  promoExisted: boolean = false;
 
 
   constructor(
@@ -46,12 +66,7 @@ export class ItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.quantity)
-    //var dataImage = localStorage.getItem('imgData');
-    //this.bannerImg = document.getElementById('tableBanner');
-    //this.bannerImg.src = dataImage;
-
-   // this.image = this._sanitizer.bypassSecurityTrustStyle(`url(${localStorage.getItem('temp_image')})`);
+    console.log(this.quantity);
     this.sub = this.route
     .queryParams
     .subscribe( params  => {
@@ -92,65 +107,349 @@ export class ItemComponent implements OnInit {
   }
 
   onChange(item){
-    this.infos.formats.forEach(element => {
-      if(element.id == item){
-      console.log(element)
-      this.real_price = element.price;
-      this.priceVrai = element.price;
-      if(localStorage.getItem('is_user_format')){
-        // console.log(localStorage.getItem('is_user_format'));
-         localStorage.removeItem('is_user_format');
-         localStorage.setItem('is_user_format', JSON.stringify(element));
-         //console.log(localStorage.getItem('is_user_format'));
-       }
-       else{
-         localStorage.setItem('is_user_format', JSON.stringify(element));
-       }
-      }
-    });
+    console.log("item", item);
+    this.storeTailles(item);
+    if(this.infos.have_types == 0){
+      this.taille.forEach(element => {
+        if(element.id == item){
+        console.log(element)
+            if(this.infos?.promotions?.length>0){
+            this.real_price = element.price;
+            this.priceVrai = element.price;
+            let today = new Date().toISOString().slice(0, 10);
+              if(new Date(this.promoItem?.fin)>new Date(today)){
+                this.promoPrice = this.getPromoPricing(element.price);
+              }
+              else{
+                this.promoPrice = element.price;
+              }
+            }
+            else{
+              this.real_price = element.price;
+              this.priceVrai = element.price;
+            }
+       // this.
+        if(localStorage.getItem('is_user_format')){
+          // console.log(localStorage.getItem('is_user_format'));
+           localStorage.removeItem('is_user_format');
+           localStorage.setItem('is_user_format', JSON.stringify(element));
+           //console.log(localStorage.getItem('is_user_format'));
+           if(this.infos.haveimages == 1){
+            this.haveimages = true;
+           }
+           if(this.infos.have_coloris == 1){
+             this.haveColoris = true;
+           }
+
+           this.storeTailles(item);
+         }
+         else{
+           localStorage.setItem('is_user_format', JSON.stringify(element));
+           if(this.infos.haveimages == 1){
+            this.haveimages = true;
+           }
+           if(this.types.have_coloris == 1){
+            this.haveColoris = true;
+          }
+           this.storeTailles(item);
+         }
+        }
+      });
+    }
+
+    else if(this.infos.have_types == 1){
+      console.log("super")
+      this.taille.forEach(element => {
+        if(element.id == item){
+        console.log(element)
+        this.real_price = element.price;
+        this.priceVrai = element.price;
+          if(this.infos?.promotions?.length>0){
+            this.real_price = element.price;
+            this.priceVrai = element.price;
+            let today = new Date().toISOString().slice(0, 10);
+            if(new Date(this.promoItem?.fin)>new Date(today)){
+              this.promoPrice = this.getPromoPricing(element.price);
+            }
+            else{
+              this.promoPrice = element.price;
+            }
+            }
+            else{
+              this.real_price = element.price;
+              this.priceVrai = element.price;
+            }
+        if(localStorage.getItem('is_user_format')){
+          // console.log(localStorage.getItem('is_user_format'));
+          console.log("super", this.types)
+          console.log("super super", this.oneType)
+          //this.haveColoris = true;
+           localStorage.removeItem('is_user_format');
+           localStorage.setItem('is_user_format', JSON.stringify(element));
+           if(this.oneType.have_coloris == 1){
+             this.haveColoris = true;
+           }
+
+           this.storeTailles(item);
+
+         }
+         else{
+           localStorage.setItem('is_user_format', JSON.stringify(element));
+ 
+           if(this.oneType.have_coloris == 1){
+            this.haveColoris = true;
+          }
+           this.storeTailles(item);
+         }
+        }
+      });
+    }
+
+    else{
+      this.infos.formats.forEach(element => {
+        if(element.id == item){
+        console.log(element)
+        this.real_price = element.price;
+        this.priceVrai = element.price;
+            if(this.infos?.promotions?.length>0){
+              this.real_price = element.price;
+              this.priceVrai = element.price;
+
+              let today = new Date().toISOString().slice(0, 10);
+                if(new Date(this.promoItem?.fin)>new Date(today)){
+                  this.promoPrice = this.getPromoPricing(element.price);
+                }
+                else{
+                  this.promoPrice = element.price;
+                }
+             
+              console.log("ïci", this.promoPrice );
+             // localStorage.setItem('promo_price', this.promoPrice.toString());
+              //console.log("ïci 2",  localStorage.getItem('promo_price'));
+              }
+              else{
+                this.real_price = element.price;
+                this.priceVrai = element.price;
+              }
+        if(localStorage.getItem('is_user_format')){
+          // console.log(localStorage.getItem('is_user_format'));
+           localStorage.removeItem('is_user_format');
+           localStorage.setItem('is_user_format', JSON.stringify(element));
+           //console.log(localStorage.getItem('is_user_format'));
+         }
+         else{
+           localStorage.setItem('is_user_format', JSON.stringify(element));
+         }
+        }
+      });
+    }
+
 
 
   }
 
- productGo(item){
-  if(this.checker!=undefined){
-      let params = {
-        id : item
+  //Pour le produit pele mele 
+  pelemele(){
+    console.log(this.forme);
+    console.log("Image en ligne");
+    if(this.forme == undefined){
+      this.notice.showError("Veuillez choisir un format disponible", "Erreur");
+    }
+    else if(this.checker == undefined){
+      this.notice.showError("Veuillez choisir une taille disponible", "Erreur");
+    }
+    else if(this.selectimages == undefined){
+      this.notice.showError("Veuillez spécifier votre nombre d'images.", "Erreur");
+    }
+    else{
+      let temp_cart_item = {
+        imagesNumber : this.nb_img,
+        format : this.itemFormat,
+        taille : this.itemTaille
       }
-      if(this.infos.attributs?.length>1){
-        if(this.attribut == null || this.attribut == undefined || this.attribut == ""){
-          this.notice.showError("Veuillez choisir une option pour continuer.", "Erreur")
+     // if(localStorage.getItem('is_user_infos')!=null){
+        localStorage.setItem('is_user_format_temp', JSON.stringify(temp_cart_item));
+        let params = {
+          id : this.infos.id
         }
-        else{
-          if(localStorage.getItem('is_user_infos')!=null){
-            this.note = "Option :"+this.attribut;
-            localStorage.setItem('is_user_note', this.note);
-            console.log(localStorage.getItem('is_user_note'))
-            this.functions.goToProduct("/charger", params);
-          }
-          else{
-            this.checkLogin();
-          }
+        this.functions.goToProduct("/charger", params);
+     // }
+/*       else{
+        this.checkLogin();
+      } */
+    }
+  }
+
+  otherDeco(){
+    console.log(this.forme);
+    if(this.forme == undefined){
+      this.notice.showError("Veuillez choisir un format disponible", "Erreur");
+    }
+    else if(this.checker == undefined){
+      this.notice.showError("Veuillez choisir une taille disponible", "Erreur");
+    }
+    else{
+      if(this.itemFormat.nb_photos){
+        this.temp_cart_item = {
+          imagesNumber : this.itemFormat.nb_photos,
+          format : this.itemFormat,
+          taille : this.itemTaille
         }
       }
       else{
-        //this.note = "R";
-        if(localStorage.getItem('is_user_infos')!=null){
-          localStorage.setItem('is_user_note', this.note);
-          console.log(localStorage.getItem('is_user_note'))
-          this.functions.goToProduct("/charger", params);
+        this.temp_cart_item = {
+          imagesNumber : this.nb_img,
+          format : this.itemFormat,
+          taille : this.itemTaille
         }
-        else{
-          this.checkLogin();
-        }
-
       }
+      //console.log("Mon produit", temp_cart_item)
+    //  if(localStorage.getItem('is_user_infos')!=null){
+        localStorage.setItem('is_user_format_temp', JSON.stringify(this.temp_cart_item));
+        let params = {
+          id : this.infos.id
+        }
+        this.functions.goToProduct("/charger", params);
+    //  }
+/*       else{
+        this.checkLogin();
+      } */
+    }
+  }
 
+
+  haveColorisProduct(){
+    //if(this.forme == undefined){
+     // this.notice.showError("Veuillez choisir un format disponible", "Erreur");
+  //  }
+    if(this.checker == undefined){
+      this.notice.showError("Veuillez choisir une taille disponible", "Erreur");
+    }
+    else if(this.selectcoloris == undefined){
+      this.notice.showError("Veuillez spécifier votre coloris", "Erreur");
     }
     else{
-      this.notice.showError("Veuillez choisir un format pour continuer.", "Erreur")
-    } 
+      let temp_cart_item = {
+        format : this.itemFormat,
+        taille : this.itemTaille,
+        coloris : this.selectcoloris,
+        cadre : this.oneType
+      }
+      if(localStorage.getItem('is_user_infos')!=null){
+        localStorage.setItem('is_user_format_temp', JSON.stringify(temp_cart_item));
+        let params = {
+          id : this.infos.id
+        }
+        this.functions.goToProduct("/charger", params);
+      }
+      else{
+        this.checkLogin();
+      }
+    }
+  }
 
+
+  haveNoteColoris(){
+    if(this.forme == undefined){
+      this.notice.showError("Veuillez choisir un format disponible", "Erreur");
+    }
+    else if(this.checker == undefined){
+      this.notice.showError("Veuillez choisir une taille disponible", "Erreur");
+    }
+    else{
+      let temp_cart_item = {
+        format : this.itemFormat,
+        taille : this.itemTaille,
+        cadre : this.oneType
+      }
+      if(localStorage.getItem('is_user_infos')!=null){
+        localStorage.setItem('is_user_format_temp', JSON.stringify(temp_cart_item));
+        let params = {
+          id : this.infos.id
+        }
+        this.functions.goToProduct("/charger", params);
+      }
+      else{
+        this.checkLogin();
+      }
+    }
+  }
+
+
+
+ productGo(item){
+    if(this.infos.haveimages == 1){
+        this.pelemele();
+    }
+    //Pour les autres produits de déco murale catégorie 1
+    else if (this.infos.have_types==0 && this.infos.haveimages==null){
+      if(this.infos.have_coloris==1){
+        this.haveColorisProduct();
+      }
+      else{
+        this.otherDeco();
+      }
+      
+    }
+    // Produit multiple
+    else if(this.infos.have_types == 1){
+      if(this.formatname == undefined){
+        this.notice.showError("Veuillez spécifier un cadre.", "Erreur")
+      }
+      else{
+          if(this.oneType.have_coloris == 1){
+            this.haveColorisProduct();
+          }
+          else{
+            console.log(this.oneType)
+            this.haveNoteColoris();
+          }
+      }
+    }
+    else if (this.infos.slug == "accessoires"){
+      let params = {
+        id : item
+      }
+      this.functions.goToProduct("/charger", params);
+    }
+    else{
+      if(this.checker!=undefined){
+        let params = {
+          id : item
+        }
+        if(this.infos.attributs?.length>1){
+          if(this.attribut == null || this.attribut == undefined || this.attribut == ""){
+            this.notice.showError("Veuillez choisir une option pour continuer.", "Erreur")
+          }
+          else{
+          //  if(localStorage.getItem('is_user_infos')!=null){
+              this.note = "Option :"+this.attribut;
+              localStorage.setItem('is_user_note', this.note);
+              console.log(localStorage.getItem('is_user_note'))
+              this.functions.goToProduct("/charger", params);
+          //  }
+          ///  else{
+           //   this.checkLogin();
+           // }
+          }
+        }
+        else{
+          //this.note = "R";
+         // if(localStorage.getItem('is_user_infos')!=null){
+            localStorage.setItem('is_user_note', this.note);
+            console.log(localStorage.getItem('is_user_note'))
+            this.functions.goToProduct("/charger", params);
+         // }
+          //else{
+          //  this.checkLogin();
+         // }
+  
+        }
+      }
+      else{
+        this.notice.showError("Veuillez choisir un format pour continuer.", "Erreur")
+      } 
+    }
   } 
 
   getPrice(){
@@ -165,6 +464,88 @@ export class ItemComponent implements OnInit {
       this.quantity = String(vl);
       console.log(this.quantity);
     }
+  }
+
+  onFormat(item){
+    console.log(item);
+    let data = {
+      id : item
+    }
+    this.serviceApi.getDatas("get_tailles", data).subscribe( async (da:any)=>{
+      console.log("formats ici et ici ", da);
+      this.taille = da.data;
+      this.havetaille = true;
+      this.storeFormat(item);
+    })
+
+  }
+
+  getTailles(item){
+    console.log(item);
+    let data = {
+      id : item
+    }
+    this.serviceApi.getDatas("get_tailles", data).subscribe( async (da:any)=>{
+      console.log("formats ici et ici ", da);
+      this.taille = da.data;
+      //this.havetaille = true;
+     // this.storeFormat(item);
+    })
+    return this.taille;
+  }
+
+  storeFormat(item){
+    this.tailles.forEach(element => {
+      if(element.id == item){
+        //localStorage.setItem('is_orientation', JSON.stringify(element));
+        this.itemFormat = element;
+      }
+    });
+  }
+
+
+  storeTailles(item){
+    console.log("taille 2", item);
+    console.log("les tailles", this.taille)
+    this.taille.forEach(element => {
+      if(element.id == item){
+        //localStorage.setItem('is_tailles', JSON.stringify(element));
+        this.itemTaille = element;
+      }
+    });
+    console.log("taille 3", this.itemTaille);
+  }
+
+  onImage(item){
+    localStorage.setItem('is_number_images', item);
+    this.nb_img = this.selectimages;
+  }
+
+  onColoris(item){
+    localStorage.setItem('is_coloris', item);
+  }
+
+
+
+  onTypeHit(item){
+    console.log(item);
+    let data = {
+      id : item
+    }
+    this.serviceApi.getDatas("getformats", data).subscribe( async (da:any)=>{
+      console.log("formats ici et ici ", da);
+      this.tailles = da.data;
+      this.getformatss = true;
+      this.get_type(item);
+    })
+  }
+
+  get_type(item){
+    this.types.forEach(element => {
+      if(element.id == item){
+        this.oneType = element
+      }
+    });
   }
 
 
@@ -183,9 +564,116 @@ export class ItemComponent implements OnInit {
       console.log("produit ici et ici ", da.data);
       console.log("Attributs ici et ici ", da.data[0].attributs);
       this.infos = da.data[0];
+      console.log("mon produit", da.data[0]);
       this.real_price = da.data[0].r_price;
       this.images = JSON.parse(localStorage.getItem('temp_image'));
-      console.log(this.images);
+      if(this.infos.promotions.length>0){
+        
+        //console.log("date", today)
+        //console.log("date", today)
+          this.getPromo(this.infos.promotions[0].promotion_id);
+      }
+      else{
+        if(this.infos.have_formats == 0 && this.infos.have_types == null && this.infos.haveimages == null){
+          this.taille = this.infos.formats;
+          console.log("ses tailles", this.taille );
+        }
+        else if(this.infos.have_types == 0){
+           this.getFormats();
+        }
+        else{
+          this.get_types();
+        }
+      }
+
+
+      
+    })
+  }
+
+  getPromoPricing(price){
+    console.log("Promo ici", price);
+    if(this.promoItem.type == "percent"){
+      return price - (price * parseInt(this.promoItem.value) / 100);
+    }
+    else{
+      return price - parseInt(this.promoItem.value);
+    }
+  }
+
+  formatDate(date){
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    var today  = new Date(date);
+    return today.toLocaleDateString("fr-FR", options);
+  }
+
+  getPromo(promo){
+    let data = {
+      promotion : promo
+    }
+    this.serviceApi.getDatas("getpromotion", data).subscribe( async (da:any)=>{
+      console.log("Promotions ici", da.data[0]);
+      this.promoItem  = da.data[0];
+
+      let today = new Date().toISOString().slice(0, 10)
+      console.log("date", today);
+      console.log("date item", this.promoItem?.fin);
+
+      if(new Date(this.promoItem?.fin)>new Date(today)){
+        if(da.data[0].type == "percent"){
+          this.promoExisted = true;
+          this.promoPrice = this.getPromoPricing(this.infos.r_price);
+        }
+        else{
+          this.promoPrice = this.getPromoPricing(this.infos.r_price);
+          this.promoExisted = false;
+        }
+
+      }
+      else{
+        console.log("FIni");
+        this.promoPrice = this.infos.r_price;
+      }
+
+
+
+      //localStorage.setItem('promo_price', this.promoPrice.toString());
+
+      if(this.infos.have_formats == 0 && this.infos.have_types == null && this.infos.haveimages == null){
+        this.taille = this.infos.formats;
+        console.log("ses tailles", this.taille );
+      }
+      else if(this.infos.have_types == 0){
+         this.getFormats();
+      }
+      else{
+        this.get_types();
+      }
+    });
+
+  }
+
+
+
+
+
+  get_types(){
+    let data = {
+      id : this.infos.id
+    }
+    this.serviceApi.getDatas("get_types", data).subscribe( async (da:any)=>{
+      console.log("types ici et ici ", da);
+      this.types = da.data;
+    })
+  }
+
+  getFormats(){
+    let data = {
+      id : this.infos.id
+    }
+    this.serviceApi.getDatas("getformats", data).subscribe( async (da:any)=>{
+      console.log("formats ici et ici ", da);
+      this.tailles = da.data;
     })
   }
 

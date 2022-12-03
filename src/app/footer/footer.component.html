@@ -1,17 +1,47 @@
 
   <!-- For Footer bottom -->
+<div *ngIf="get_route()!='/success'">
+
+
   <div class="album py-5-custom bg-custom-image m-50">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-        <div class="col">
-            <h3 class="fw-light footer-title">Nos produits</h3>
+      <div class="row ">
+        <div class="col-sm-3  pt-5">
+            <img src="../../assets/img/logo-footer.svg"  width="150">
+            <p class="p-footer">
+                The Print+ est un service numérique de tirages photos qui permet aux utilisateurs d’imprimer leurs photos de grandes tailles à partir de notre site internet ou dans nos agences partenaires.
+            </p>
+            <div class="row">
+                <div class="coli">
+                    <img class="add-img center"  src="../../assets/img/fb.svg" width="8">
+                </div>
+                <div class="coli col">
+                    <img class="add-img center"  src="../../assets/img/tw.svg" width="15">
+                </div>
+                <div class="coli col">
+                    <img class="add-img center"  src="../../assets/img/it.svg" width="15">
+                </div>
+                <div class="coli col">
+                    <img class="add-img center"  src="../../assets/img/wh.svg" width="15">
+                </div>
+                <div class="coli col">
+                    <img class="add-img center"  src="../../assets/img/te.svg" width="15">
+                </div>
+                <div class="coli col">
+                    <img class="add-img center"  src="../../assets/img/fl.svg" width="15">
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3  pt-5 desk-align">
+           
             <div>
+                <h3 class="fw-light footer-title">Nos produits</h3>
                 <ol class="list-type">
                     <li>
-                        <a [routerLink]="['/tirage']" class="text-white" >Tirages photos</a>
+                        <a [routerLink]="['/tirages-photos']" class="text-white" >Tirages photos</a>
                     </li>
                     <li>
-                        <a [routerLink]="['/decoration']" class="text-white" >Déco murale</a>
+                        <a [routerLink]="['/deco-murale']" class="text-white" >Déco murale</a>
                     </li>
                     <li>
                         <a [routerLink]="['/coming-soon']" class="text-white" >Livres photos</a>
@@ -25,9 +55,31 @@
                 </ol>
             </div>
         </div>
-        <div class="col">
-            <h3 class="fw-light footer-title">Liens importants</h3>
+        <div class="col-sm-3  pt-5 desk-align">
+           
             <div>
+                <h3 class="fw-light footer-title">Contacts</h3>
+                <ol class="list-type">
+           
+                    <li>
+                        <span>(+ 237) 6 75 15 08 98 </span>
+                    </li>
+                               
+             <!--        <li>
+                        <span>(+ 237) 670 000 333</span>
+                    </li> -->
+                               
+                    <li>
+                        <span>theprint+@gmail.com</span>
+                    </li>
+          
+                </ol>
+            </div>
+        </div>
+        <div class="col-sm-3  pt-5 desk-align">
+           
+            <div>
+                <h3 class="fw-light footer-title">Liens importants</h3>
                 <ol class="list-type">
                     <li>
                         <a [routerLink]="['/cgv']" class="text-white" >CGV</a>
@@ -41,51 +93,6 @@
                 </ol>
             </div>
         </div>
-        <div class="col">
-            <h3 class="fw-light footer-title">Contacts</h3>
-            <div>
-                <ol class="list-type">
-           
-                    <li>
-                        <span>(+ 237) 699 000 333 </span>
-                    </li>
-                               
-                    <li>
-                        <span>(+ 237) 670 000 333</span>
-                    </li>
-                               
-                    <li>
-                        <span>theprint+@gmail.com</span>
-                    </li>
-          
-                </ol>
-            </div>
-        </div>
-        <div class="col">
-            <h3 class="fw-light footer-title">Réseaux sociaux</h3>
-            <div class="row">
-                <div class="coli col">
-                    <img class="add-img center"  src="../../assets/img/fb.svg" width="8">
-                </div>
-                <div class="coli col">
-                    <img class="add-img center"  src="../../assets/img/tw.svg" width="15">
-                </div>
-                <div class="coli col">
-                    <img class="add-img center"  src="../../assets/img/it.svg" width="15">
-                </div>
-            </div>
-            <div class="row pt-2">
-                <div class="coli col">
-                    <img class="add-img center"  src="../../assets/img/wh.svg" width="15">
-                </div>
-                <div class="coli col">
-                    <img class="add-img center"  src="../../assets/img/te.svg" width="15">
-                </div>
-                <div class="coli col">
-                    <img class="add-img center"  src="../../assets/img/fl.svg" width="15">
-                </div>
-            </div>
-        </div>
       </div>
     </div>
   </div>
@@ -95,15 +102,9 @@
   <div class="album copy-p bg-custom-copyright">
     <div class="container">
       <div>
-          <p class="text-w text-center">Copyright © 2022 The Print+ | Conception et Gestion par <b><a href="https://pondocreativ.com/" style="color: white!important;" target="_blank">Pondo Creativ</a></b></p>
+          <p class="text-w text-center">Copyright © 2022 The Print+</p>
       </div>
     </div>
   </div>
 
-
-<!--   <div *ngIf="cookies==null" class="cookie-consent"> <span>This site uses cookies to enhance user experience. see <a [routerLink]="['/privacy']" class="ml-1 text-decoration-none">privacy policy</a> </span>
-    <div class="mt-2 d-flex align-items-center justify-content-center g-2">
-         <button class="allow-button mr-1" (click)="allow()">Allow cookies</button> 
-         <button class="cancel-button" (click)="cancel()" >cancel</button>
-    </div>
-</div> -->
+</div>

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { timer } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
+import { PanierService } from '../services/panier.service';
 
 @Component({
   selector: 'app-header',
@@ -18,44 +20,92 @@ export class HeaderComponent implements OnInit {
   dec : boolean = false;
   ac : boolean = false;
   acc: any;
+  code_promo : any;
   infoss: any;
-
+  navbarCollapsed = true;
+  timerSubscription: Subscription; 
   constructor(
     public router: Router,
     private route:ActivatedRoute,
-    private serviceApi : ApiService
+    private serviceApi : ApiService,
+    private panierService : PanierService
     ) {
 
       router.events.subscribe((val) => {
         // see also 
         console.log('Route', this.get_route());
+        this.check_route();
         this.getPanier();
         console.log(val instanceof NavigationEnd) 
     });
-/*       const ticker = timer(0, 5000);
-      ticker.subscribe(() => {
-        console.log('Route', this.get_route());
-        this.getPanier();
 
-      });  */
+    this.timerSubscription = timer(0, 10000).pipe( 
+      map(() => { 
+        this.getPanier(); // load data contains the http request 
+      }) 
+    ).subscribe();
+
      }
 
   ngOnInit(): void {
     console.log(this.router.url); //  /routename
-    this.get_tirages();
+    //this.get_tirages();
+
+    if(this.get_route()!="/redirect"){
+      this.get_tirages();
+    }
   }
+
+  ngOnDestroy(): void { 
+    this.timerSubscription.unsubscribe(); 
+  } 
 
   get_route(){
     //console.log("Mon routeur", this.router)
     return this.router.url.split('?')[0];
   }
 
-  getPanier(){
-    var test = localStorage.getItem('the_print_cart');
-    this.product = JSON.parse(test);
-    console.log(this.product);
-    this.get_tirages();
+  check_route(){
+      if(this.get_route()=='/success'){
+        return true;
+      }
+      else if(this.get_route()=='/mon-panier'){
+        return true;
+      }
+      else if(this.get_route()=='/paiement'){
+        return true;
+      }
+      else if(this.get_route()=='/mon-compte'){
+        return true;
+      }
+      else if(this.get_route()=='/charger'){
+        return true;
+      }
+      else{
+        return false;
+      }
   }
+
+  getPanier(){
+ //   this.loading = true;
+ if(localStorage.getItem('userUID')){
+  this.panierService.getPanier(localStorage.getItem('userUID')).snapshotChanges().pipe(
+    map(changes =>
+      changes.map(c =>
+        ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+      )
+    )
+  ).subscribe(data => {
+    console.log("panier ici ", data);
+   if(data.length>0){
+      this.product = data;
+    //  this.loading = false;
+    //  this.delivery_points();
+    } 
+  });
+ }
+
+}
 
 
   get_tirages(){
@@ -132,5 +182,21 @@ export class HeaderComponent implements OnInit {
     this.ac = false;
     this.dec = false;
   }
+
+  detectMob() {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+    
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
+}
 
 }

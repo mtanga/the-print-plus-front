@@ -1,23 +1,23 @@
 
-<header class="bg-white text-white" >
+<header class="bg-white text-white" *ngIf="get_route()!='/success'">
     <div class="container" >
       <div  class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start" style="padding-top: 25px;padding-bottom: 25px;">
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" class="nav-link px-2 text-secondary">
-              <img src="../../assets/img/logo-new.png" style="margin-left: -16px;" width="100">
+              <img src="../../assets/img/logo.svg" style="margin-left: -16px;" width="150">
           </a></li>
         </ul>
-        <div class="text-end">
-            <a > <span class="phone text-login"> (+237) 699 000 333 - (+237) 6799 000 333</span></a>
-            <a [routerLink]="['/rechercher']"> <span class="me-2 text-login text-white text-sm-center"> <img src="../../assets/img/search.svg" width="22"></span></a>
+        <div class="text-end mobile">
+            <span  class="phone text-login"> <a style="color:black!important; text-decoration: none;" href="tel:237699000333">(+237) 6 75 15 08 98 </a><!--  - <a style="color:black!important;text-decoration: none;" href="tel:2376799000333">(+237) 6799 000 333 </a> --></span>
+            <a *ngIf="!detectMob()" [routerLink]="['/rechercher']"> <span class="me-2 text-login text-white text-sm-center"> <img src="../../assets/img/search.svg" width="22"></span></a>
            
-            <span class="fa-stack fa-2x has-badge" data-count="4">
+            <span *ngIf="!detectMob()" class="fa-stack fa-2x has-badge" data-count="4">
                 {{product?.length || 0}}
               </span>
 
-            <a [routerLink]="['/mon-panier']"> <span class="me-2 text-login text-white"><img src="../../assets/img/cart.svg" width="22"></span>
+            <a *ngIf="!detectMob()" [routerLink]="['/mon-panier']"> <span class="me-2 text-login text-white"><img src="../../assets/img/cart.svg" width="22"></span>
             </a>
-            <a [routerLink]="['/mon-compte']"><button type="button" class="btn btn-primary-custom"><img src="../../assets/img/account.svg" width="22"></button></a>
+            <a *ngIf="!detectMob()" [routerLink]="['/mon-compte']"><button type="button" class="btn btn-primary-custom"><img src="../../assets/img/account.svg" width="22"></button></a>
         </div>
       </div>
       <!--Navbar -->
@@ -37,16 +37,26 @@
         </div>
       </div> -->
 
-
-      <nav *ngIf="get_route()!='/charger'" class="navbar navbar-expand-lg navbar-white bg-white-o p-3">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+<div *ngIf="detectMob()">
+      <nav *ngIf="check_route()==false " class="navbar navbar-expand-lg navbar-white bg-white-o p-3">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" >
           Menu<!-- <span class="navbar-toggler-icon">Menu</span> -->
         </button>
 
 
-<!--         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button> -->
+        <div class="text-end" *ngIf="detectMob()">
+          <a [routerLink]="['/rechercher']"> <span class="me-2 text-login text-white text-sm-center"> <img src="../../assets/img/search.svg" width="22"></span></a>
+         
+          <span class="fa-stack fa-2x has-badge" data-count="4">
+              {{product?.length || 0}}
+            </span>
+
+          <a [routerLink]="['/mon-panier']"> <span class="me-2 text-login text-white"><img src="../../assets/img/cart.svg" width="22"></span>
+          </a>
+          <a [routerLink]="['/mon-compte']"><button type="button" class="btn btn-primary-custom"><img src="../../assets/img/account.svg" width="22"></button></a>
+      </div>
+
+
         <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
           <ul class="navbar-nav ml-auto">
               <!--Tirage Pohtos-->
@@ -103,9 +113,92 @@
             <li class="nav-item active">
                 <a class="nav-link" [routerLink]="['/coming-soon']">Calendriers</a>
             </li>
+            <li class="nav-item active">
+              <a class="nav-link" [routerLink]="['/partners']">Tirage imédiat</a>
+          </li>
           </ul>
         </div>
       </nav> 
+    </div>
+
+
+
+    <div *ngIf="!detectMob()" (mouseleave)="mouseLeaveall()" >
+      <nav class="navbar navbar-expand-lg navbar-white bg-white-o p-3" >
+        <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav ms-auto ">
+                <li class="nav-item" (mouseover)="show('tirage-photos')">
+                    <a class="nav-link mx-2 active" aria-current="page"  [routerLink]="['tirages-photos']" >Tirages photos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" [routerLink]="['/deco-murale']" (mouseover)="show('deco')">Déco murale</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" [routerLink]="['/accessoires']" (mouseover)="show('acc')">Accéssoires</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" [routerLink]="['/coming-soon']">Livres photos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2" [routerLink]="['/coming-soon']">Calendriers</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link mx-2" [routerLink]="['/partners']">Tirage immédiat</a>
+              </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+    <nav *ngIf="tir==true" class="navbar navbar-expand-lg navbar-white bg-white-hover p-3" (mouseleave)="mouseLeaveall()" >
+      <div class="container-fluid">
+      <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto ">
+          <li class="nav-item " *ngFor="let item of tirage;">
+              <a class="nav-link mx-2 sub_menu" [routerLink]="['item']" [queryParams]="{id: item.id}">{{item.name}}</a>
+          </li>
+          </ul>
+      </div>
+      </div>
+    </nav>
+
+    <nav *ngIf="dec==true" class="navbar navbar-expand-lg navbar-white bg-white-hover p-3" (mouseleave)="mouseLeaveall()">
+      <div class="container-fluid">
+      <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto ">
+          <li class="nav-item" *ngFor="let item of deco;">
+              <a class="nav-link mx-2 sub_menu" [routerLink]="['item']" [queryParams]="{id: item.id}">{{item.name}}</a>
+          </li>
+          <li class="nav-item" *ngFor="let item of infoss;">
+            <a class="nav-link mx-2 sub_menu" [routerLink]="['item']" [queryParams]="{id: item.id}">{{item.name}}</a>
+        </li>
+          </ul>
+      </div>
+      </div>
+    </nav>
+
+
+
+    <nav *ngIf="ac==true" class="navbar navbar-expand-lg navbar-white bg-white-hover p-3" (mouseleave)="mouseLeaveall()">
+      <div class="container-fluid">
+      <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ms-auto ">
+          <li class="nav-item" *ngFor="let item of acc;">
+              <a class="nav-link mx-2 sub_menu" [routerLink]="['item']" [queryParams]="{id: item.id}">{{item.name}}</a>
+          </li>
+          </ul>
+      </div>
+      </div>
+    </nav>
+
+
+
+</div>
+
     </div>
   </header>
 

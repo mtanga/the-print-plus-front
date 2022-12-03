@@ -1,5 +1,5 @@
 .bg-custom{
-    background-image: url("../../assets/img/img-bg.png");
+    background-image: url("../../assets/img/homebg.jpg");
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover; /* Resize the background image to cover the entire container */
     background-position: center; /* Center the image */
@@ -14,7 +14,7 @@
 
 @media only screen and (max-width: 720px) {
     .bg-custom{
-        background-image: url("../../assets/img/img-bg.png");
+        background-image: url("../../assets/img/homebg.jpg");
         background-repeat: no-repeat; /* Do not repeat the image */
         background-size: cover; /* Resize the background image to cover the entire container */
         background-position: center; /* Center the image */
@@ -135,7 +135,7 @@
 }
 
 .spaces{
-    padding-top: 100px;
+    padding-top: 50px;
 
 }
 
@@ -162,6 +162,9 @@ mr-d{
 }
 ml-d{
     padding-right: 70px;
+}
+.right{
+    float: right;
 }
 } 
 

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FunctionsService } from '../services/functions.service';
+import { PanierService } from '../services/panier.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -12,25 +14,53 @@ export class CartComponent implements OnInit {
   format: any;
   qtee : number;
   totalt: number;
+  public loading = false;
 
   constructor(
     private router: Router,
-    private functions : FunctionsService
+    private functions : FunctionsService,
+    private panierService : PanierService
   ) { 
+
+
 
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.getPanier();
   }
 
   getPanier(){
-    var test = localStorage.getItem('the_print_cart');
-    this.product = JSON.parse(test);
-    console.log("Les produits", this.product);
+    if(localStorage.getItem('userUID')){
+      this.panierService.getPanier(localStorage.getItem('userUID')).snapshotChanges().pipe(
+        map(changes =>
+          changes.map(c =>
+            ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+          )
+        )
+      ).subscribe(data => {
+        console.log("panier ici ", data);
+        this.loading = false;
+       if(data.length>0){
+          this.product = data;
+        } 
+      });
+    }
+    else{
+      this.loading = false;
+    }
   }
 
   pay(){
+    let data = {
+      type : "paiement",
+      link : "/paiement",
+      key :  "id",
+      value : ""
+    }
+    localStorage.removeItem('current_url');
+    localStorage.setItem('current_url', JSON.stringify(data));
     this.router.navigate(['/paiement']);
   }
 
@@ -68,71 +98,55 @@ export class CartComponent implements OnInit {
   }
 
   add(item){
-    var test = localStorage.getItem('the_print_cart');
-    let arr = JSON.parse(test);
-    console.log(item)
-    for (let i=0;i<arr.length;i++){
-      if(arr[i].id==item.id){
-        console.log("troue");
-        arr[i].qte = arr[i].qte+1;
-        console.log('nouveau', arr);
-        let json = JSON.stringify(arr);
-        localStorage.setItem('the_print_cart', json); 
-        //this.total=this.getotal(arr);
-        this.getPanier();
+    console.log(item);
+    item.products.qte = item.products.qte +1;
+    console.log(item);
+     let data = {
+       products : item.products
+    }
+    this.panierService.update(item.id, data).then(() => {
+      this.getPanier();
+    })
+    .catch(err => console.log(err));  
+}
 
-      }
-    } 
-  }
   remove(item){
-    var test = localStorage.getItem('the_print_cart');
-    let arr = JSON.parse(test);
-    console.log(item)
-    for (let i=0;i<arr.length;i++){
-      if(arr[i].id==item.id){
-        console.log("troue");
-        if(arr[i].qte>1){
-          arr[i].qte = arr[i].qte-1;
-          console.log('nouveau', arr);
-          let json = JSON.stringify(arr);
-          localStorage.setItem('the_print_cart', json); 
-          //this.total=this.getotal(arr);
-          this.getPanier();
-        }
-      }
-    } 
+    console.log(item);
+    if(item.products.qte>1){
+      item.products.qte = item.products.qte - 1;
+      let data = {
+        products : item.products
+     }
+     this.panierService.update(item.id, data).then(() => {
+       this.getPanier();
+     })
+     .catch(err => console.log(err));  
+    }
   }
 
-  delete(items){
+  delete(item){
     if(confirm("Êtes vous sûr de vouloir supprimer cette image ?")) {
-      var test = localStorage.getItem('the_print_cart');
-      let arr = JSON.parse(test);
-      for (let i=0;i<arr.length;i++){
-        if(arr[i].id==items.id){
-          //console.log('le bon:', arr[i]);
-          //console.log('le bon index:', i);
-          arr.splice(i, 1);
-          let json = JSON.stringify(arr);
-          localStorage.setItem('the_print_cart', json); 
-          this.getPanier();
-        }
-    }
-    }
-
+      this.panierService.delete(item.id).then(() => {
+        this.getPanier();
+      })
+      .catch(err => console.log(err));  
+     }
 }
 
 totalAmount() {
   this.totalt = 0;
-  var test = localStorage.getItem('the_print_cart');
-  let arr = JSON.parse(test);
-  console.log('mon tableau', arr)
-  for (let i=0;i<arr.length;i++){
-    let totalP = 0;
-    totalP = arr[i].qte * arr[i].price;
-    this.totalt = this.totalt+(arr[i].qte * arr[i].price);
-    console.log('mon i:',i, totalP);
-    console.log('mon total',this.totalt);
-  } 
+  //var test = localStorage.getItem('the_print_cart');
+  let arr = this.product;
+  //console.log('mon tableau', arr)
+  if(arr!=null){
+    for (let i=0;i<arr.length;i++){
+      let totalP = 0;
+      totalP = arr[i].products.qte * arr[i].products.price;
+      this.totalt = this.totalt+(arr[i].products.qte * arr[i].products.price);
+     // console.log('mon i:',i, totalP);
+      //console.log('mon total',this.totalt);
+    } 
+  }
   return this.totalt;
 }
 

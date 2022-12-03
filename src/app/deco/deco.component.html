@@ -32,12 +32,12 @@
 
     
     <div id="products">
-        <div class="row space marge">
+        <div class="row space marge space-mobile">
             <h1 class="heading no-padding text-custom-black">Faites encadrer vos photos à partir de <span class="rose">2000 FCFA</span></h1>
             <p class="para no-padding text-custom-black">Faites encadrer votre photo avec soin par notre équipe de professionnels ! Optez pour le cadre de votre choix parmi la sélection disponible sur notre boutique en ligne. Il n’y a aucune limite à votre imagination concernant le format, la couleur et le design, laissez-vous porter par vos moindres désirs en matière de décoration. </p>
         </div>
         <div>
-            <h4 style="color:#1E3259;font-weight: 700;font-size: 35px;padding-bottom: 25px;">Tirage papier photo jet d’encre</h4>
+            <h4 class="space1-mobile" style="color:#1E3259;font-weight: 700;font-size: 35px;padding-bottom: 25px;">Tirage papier photo jet d’encre</h4>
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col"  *ngFor="let item of infos;">
                     <div (click)="productGo(item.id)" class="hand card">
@@ -48,7 +48,7 @@
                             <p class="card-text product-title">{{item.name}}</p><br/>
                             <div class="meta">
                                 <p >
-                                    <span><b>Format ({{item.formats[0].unit || '' }}) :</b> {{showFormats(item.formats)}}</span>
+                                    <span><b>Format ({{item.formats[0]?.unit || 'cm' }}) :</b> {{showFormats(item.formats)}}</span>
                                     
                                     <br><span>
                                         À partir de <span class="price"><b>{{item.r_price}} FCFA</b></span>
@@ -64,7 +64,7 @@
             </div>
 
 
-            <h4 style="color:#1E3259;font-weight: 700;font-size: 35px;padding-top: 25px;padding-bottom: 25px;">Tirage papier photo jet d’encre sur support</h4>
+            <h4 class="space1-mobile"  style="color:#1E3259;font-weight: 700;font-size: 35px;padding-top: 25px;padding-bottom: 25px;">Tirage papier photo jet d’encre sur support</h4>
             <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col"  *ngFor="let items of infoss;">
                     <div (click)="productGo(items.id)" class="hand card">
@@ -75,7 +75,7 @@
                             <p class="card-text product-title">{{items.name}}</p><br/>
                             <div class="meta">
                                 <p>
-                                  <span><b>Format ({{items.formats[0].unit || ""}}) :</b> {{showFormats(items.formats) || ""}}</span> 
+                                  <span><b>Format (cm) :</b> {{showFormats(items.formats) || ""}}</span> 
                                     
                                     <br><span>
                                         À partir de <span class="price"><b>{{items.r_price}} FCFA</b></span>

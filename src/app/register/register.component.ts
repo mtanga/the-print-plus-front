@@ -37,6 +37,28 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  onCountryChange($event){
+    console.log("onCountryChange", $event );
+  }
+
+  getNumber($event){
+    console.log("Get number", $event );
+    this.phone_number = $event;
+   // this.check_profile_completed_update()
+
+  }
+
+  telInputObject($event){
+    console.log("telInputObject", $event );
+  }
+
+  hasError($event){
+    this.phone_number=undefined 
+    //this.check_profile_completed_update()
+  }
+  
+
 passwordo() {
     this.showo = !this.showo;
 }

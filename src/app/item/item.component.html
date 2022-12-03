@@ -2,7 +2,7 @@
 
     <div class="container">
         <!-- product -->
-        <div class="breadcumbs" style="margin-top:-50px;padding-bottom: 50px;">
+        <div class="breadcumbs" style="margin-top:-20px;padding-bottom: 50px;">
           <a style="color:#4CB0E9!important;"  href="javascript:history.back()" class="bread-text hand">Retour</a>
         </div>
 
@@ -54,54 +54,175 @@
                                     </select>
                               </form>
                           </div>
-                           <!--  {{showFormats(infos.formats)}} -->
-                     <!--        <table class="table">
-                                <thead class="thead-dark">
-                                  <tr>
-                                    <th scope="col">Formats</th>
-                                    <th scope="col">Prix</th>
-                                    <th scope="col">Votre choix</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr *ngFor="let format of infos.formats;">
-                                    <td>{{format.name}}</td>
-                                    <td>{{format.price}} F CFA</td>
-                                    <td>
-                                      <div class="form-check">
-                                        <input (change)="handleChanged(format)" id="checker" [(ngModel)]="checker"  name="checker" type="radio" class="form-check-input" value="{{format.id}}" required>
-                                        <label class="form-check-label" for="debit"></label>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                </tbody>
-                              </table> -->
                               
                         </div>
 
 
 
-                    <div *ngIf="infos.attributs.length>1" class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" >
-                      <form >
-                        <h3  *ngIf="infos.attributs[0].type=='couleur'" class="t-3">Couleurs du cadre :  </h3>
-                        <h3  *ngIf="infos.attributs[0].type=='orientation'" class="t-3">Orientation :  </h3>
-                          <select class="selectionf" [(ngModel)]="attribut" name="attribut" id="attribut" (change)="onChange($event.target.value)">
-                              <option *ngIf="infos.attributs[0].type=='couleur'" class="dropdown-item" disabled selected value="undefined">Sélectioner une couleur</option>
-                              <option *ngIf="infos.attributs[0].type=='orientation'" class="dropdown-item" disabled selected value="undefined">Sélectioner une orientation</option>
-                              <option *ngFor="let attr of infos.attributs;" value="{{attr.name}}" >{{attr.name}}</option>
-                            </select>
-                      </form>
-                  </div>
-          <!--               <div class="col-md-6 col-md-offset-1 col-sm-6 col-xs-6">
+                        <div *ngIf="infos?.attributs.length>1" class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" >
+                          <form >
+                            <h3  *ngIf="infos?.attributs[0].type=='couleur'" class="t-3">Couleurs du cadre :  </h3>
+                            <h3  *ngIf="infos?.attributs[0].type=='orientation'" class="t-3">Orientation :  </h3>
+                              <select class="selectionf" [(ngModel)]="attribut" name="attribut" id="attribut" (change)="onChange($event.target.value)">
+                                  <option *ngIf="infos.attributs[0].type=='couleur'" class="dropdown-item" disabled selected value="undefined">Sélectioner une couleur</option>
+                                  <option *ngIf="infos.attributs[0].type=='orientation'" class="dropdown-item" disabled selected value="undefined">Sélectioner une orientation</option>
+                                  <option *ngFor="let attr of infos.attributs;" value="{{attr.name}}" >{{attr.name}}</option>
+                                </select>
+                          </form>
+                      </div>
+                    </div>
+
+                    
+
+
+                    <!-- Déco murale 1 -->
+
+                    <div class="row py-2" *ngIf="this.infos.have_types == 0">
+
+
+                      <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                          <h3  class="t-3">Formats disponibles</h3>
+                          <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
                             <form >
-                                <select class="selectionf" [(ngModel)]="format" name="format" id="format" (change)="onChange($event.target.value)">
-                                    <option class="dropdown-item" disabled selected value="undefined">Sélection</option>
-                                    <option *ngFor="let format of infos.formats;" value="{{format.id}}" >{{format.name}}</option>
+                                <select class="selectionf" [(ngModel)]="forme" name="forme" id="format" (change)="onFormat($event.target.value)">
+                                    <option class="dropdown-item" disabled selected value="undefined">Sélectionnez un format</option>
+                                    <option *ngFor="let format of tailles;" value="{{format.id}}" >{{format.valeur}} </option>
                                   </select>
                             </form>
-                        </div> -->
+                          </div>
+                      </div>
+
+                      <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" *ngIf="havetaille">
+                        <h3  class="t-3">Tailles disponibles</h3>
+                        <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                          <form >
+                              <select class="selectionf" [(ngModel)]="checker" name="checker" id="checker" (change)="onChange($event.target.value)">
+                                  <option class="dropdown-item" disabled selected value="undefined">Sélectionnez un format</option>
+                                  <option *ngFor="let formatItem of taille;" value="{{formatItem.id}}" >{{formatItem.name}} -- {{formatItem.price}} F CFA</option>
+                                </select>
+                          </form>
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" *ngIf="haveimages">
+                        <h3  class="t-3">Nombre d'images</h3>
+                        <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                          <form >
+                              <select class="selectionf" [(ngModel)]="selectimages" name="selectimages" id="selectimages" (change)="onImage($event.target.value)">
+                                  <option class="dropdown-item" disabled selected value="undefined">Sélectionnez votre nombre d'images</option>
+                                  <option class="dropdown-item" value="2">02 images</option>
+                                  <option class="dropdown-item" value="4" >04 images</option>
+                                  <option class="dropdown-item" value="9">09 images</option>
+                                  <option class="dropdown-item" value="16">16 images</option>
+                                </select>
+                          </form>
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" *ngIf="haveColoris">
+                        <h3  class="t-3">Coloris disponibles</h3>
+                        <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                          <form >
+                              <select class="selectionf" [(ngModel)]="selectcoloris" name="selectcoloris" id="selectcoloris" (change)="onColoris($event.target.value)">
+                                  <option class="dropdown-item" disabled selected value="undefined">Sélectionnez un coloris</option>
+                                  <option class="dropdown-item" value="noir">Noir</option>
+                                  <option class="dropdown-item" value="blanc" >Blanc</option>
+                                  <option class="dropdown-item" value="gris_argente">Gris argenté</option>
+                                  <option class="dropdown-item" value="pin">Pin</option>
+                                  <option class="dropdown-item" value="or">Or</option>
+                                </select>
+                          </form>
+                        </div>
+                      </div>
+                      
+                  </div>
+
+                    <!-- MUltiple produit -->
+                    <div class="row py-2" *ngIf="this.infos.have_types == 1">
+
+
+                      <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                          <h3  class="t-3">Cadres disponibles</h3>
+                          <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                            <form >
+                                <select class="selectionf" [(ngModel)]="formatname" name="formatname" id="formatname" (change)="onTypeHit($event.target.value)">
+                                    <option class="dropdown-item" disabled selected value="undefined">Sélectionnez un cadre</option>
+                                    <option *ngFor="let typeItem of types;" value="{{typeItem.id}}" >{{typeItem.value}} </option>
+                                  </select>
+                            </form>
+                          </div>
+                      </div>
+
+                      
+                      <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" *ngIf="getformatss">
+                        <h3  class="t-3">Formats disponibles</h3>
+                        <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                          <form >
+                              <select class="selectionf" [(ngModel)]="forme" name="forme" id="forme" (change)="onFormat($event.target.value)">
+                                  <option class="dropdown-item" disabled selected value="undefined">Sélectionnez un format</option>
+                                  <option *ngFor="let formatItem of tailles;" value="{{formatItem.id}}" >{{formatItem.valeur}}</option>
+                                </select>
+                          </form>
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" *ngIf="havetaille">
+                        <h3  class="t-3">Tailles disponibles</h3>
+                        <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                          <form >
+                              <select class="selectionf" [(ngModel)]="checker" name="checker" id="checker" (change)="onChange($event.target.value)">
+                                  <option class="dropdown-item" disabled selected value="undefined">Sélectionnez un format</option>
+                                  <option *ngFor="let formatItem of taille;" value="{{formatItem.id}}" >{{formatItem.name}} -- {{formatItem.price}} F CFA</option>
+                                </select>
+                          </form>
+                        </div>
                     </div>
+
+
+
+                    <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" *ngIf="haveColoris">
+                      <h3  class="t-3">Coloris disponibles</h3>
+                      <div class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12">
+                        <form >
+                            <select class="selectionf" [(ngModel)]="selectcoloris" name="selectcoloris" id="selectcoloris" (change)="onColoris($event.target.value)">
+                                <option class="dropdown-item" disabled selected value="undefined">Sélectionnez un coloris</option>
+                                <option class="dropdown-item" value="noir">Noir</option>
+                                <option class="dropdown-item" value="blanc" >Blanc</option>
+                                <option class="dropdown-item" value="gris_argente">Gris argenté</option>
+                                <option class="dropdown-item" value="pin">Pin</option>
+                                <option class="dropdown-item" value="or">Or</option>
+                              </select>
+                        </form>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+
+
+
+
+
+
+
+
+
+                  <div class="row py-2" >
+                      <div *ngIf="infos?.attributs?.length>1" class="col-md-12 col-md-offset-1 col-sm-12 col-xs-12 pt-3" >
+                        <form *ngIf="infos?.attributs[0].type=='couleur'">
+                          <h3  *ngIf="infos?.attributs[0].type=='couleur'" class="t-3">Couleurs du cadre :  </h3>
+                            <select class="selectionf" [(ngModel)]="attribut" name="attribut" id="attribut" (change)="onChange($event.target.value)">
+                                <option *ngIf="infos.attributs[0].type=='couleur'" class="dropdown-item" disabled selected value="undefined">Sélectioner une couleur</option>
+                                <option *ngIf="infos.attributs[0].type=='orientation'" class="dropdown-item" disabled selected value="undefined">Sélectioner une orientation</option>
+                                <option *ngFor="let attr of infos.attributs;" value="{{attr.name}}" >{{attr.name}}</option>
+                              </select>
+                        </form>
+                    </div>
+                  </div>
 
   <!--                   <div class="row py-2">
                         <div class="col-md-6 col-md-offset-1 col-sm-6 col-xs-6">
@@ -123,16 +244,27 @@
 
 
 
-                    <div *ngIf="infos.promotion" class="certified">
-                        <p><b>50%</b> de réduction</p>
-                    </div>
+                 
 
                     <div class="row py-33" >
-                        <div class="col-md-4 col-md-offset-1 col-sm-4 col-xs-4 rounded-1">
+                        <span *ngIf="promoItem?.type=='percent'" style="color:#D496A7">
+                          - {{promoItem.value}} % de réduction <span style="color: red;" *ngIf="infos?.promotions?.length>0 && promoExisted==false">(Promotion expirée le {{formatDate(promoItem.fin)}})</span>
+                        </span>
+                        <span *ngIf="promoItem?.type=='numeric'" style="color:#D496A7">
+                          - {{promoItem.value}} FCFA de réduction <span style="color: red;" *ngIf="infos?.promotions?.length>0 && promoExisted==false">(Promotion expirée le {{formatDate(promoItem.fin)}})</span>
+                        </span>
+
+                        <div *ngIf="infos?.promotions?.length==0"class="col-md-4 col-md-offset-1 col-sm-4 col-xs-4 rounded-1">
                            <span class="pricer">{{priceVrai || real_price}} FCFA</span>
                         </div>
-                        <div *ngIf="infos.price" class="col-md-4 col-md-offset-1 col-sm-4 col-xs-4 rounded-2">
-                            <span class="pricep">{{infos.price}} FCFA</span>
+
+
+                        <div *ngIf="infos?.promotions?.length>0" class="col-md-4 col-md-offset-1 col-sm-4 col-xs-4 rounded-1">
+                          <span class="pricer">{{promoPrice}} FCFA</span>
+                       </div>
+
+                        <div *ngIf="infos?.promotions?.length>0" class="col-md-4 col-md-offset-1 col-sm-4 col-xs-4 rounded-2">
+                            <span class="pricep">{{priceVrai || real_price}} FCFA </span>
                         </div>
                     </div>
 

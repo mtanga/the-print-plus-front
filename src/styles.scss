@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 @import '~ngx-toastr/toastr';
+
+
 body {
     color: #3C3C3C;
   }
@@ -59,5 +61,188 @@ body {
     padding: 1rem 1rem;
     margin-top: 10px !important;
 }
+  .mobile{
+    padding-top: 20px!important;
+    padding-bottom: 15px!important;
+  }
+  .navbar-toggler{
+    padding: 20px!important;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: #ececec!important;
+    border: #ececec!important;
+    border-radius: 0.25rem;
+    transition: box-shadow 0.15s ease-in-out;
+}
+
+.centi{
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  line-height: 3rem;
+}
+
+.spaces{
+  padding-top: 100px;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.space-mobile{
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.space1-mobile{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.space2-mobile{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.p-mobile{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.pdt-mobile{
+  padding-right: 15px;
+}
+.g-3, .gy-3 {
+  --bs-gutter-y: 1rem;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.pl-mobile{
+  margin-left: 15px;
+}
+
+h3.centi{
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  padding-bottom: 25px;
+}
+ .hide-mobile{
+   display: none!important;
+ }
+
+ .add-bg{
+  /* border-radius: 15px; */
+  height: 400px;
+  vertical-align: middle;
+  margin-top: -350px;
+}
+
+h3.addd{
+  font-size: 1.5rem!important;
+}
+.add-d{
+  font-size: .7rem!important;
+}
+
+.img-one{
+  width: 50% !important;
+    display: block;
+    margin-left: auto!important;
+    margin-right: auto!important;
+}
+
+.des-img {
+  text-align: center;
+    display: block;
+}
+
+.float{
+  position: fixed;
+  width: 300px!important;
+  height: 100px!important;
+  bottom: 0px!important;
+  right: 0px;
+  background-color: #ECECEC;
+  color: #FFF;
+  text-align: left;
+  padding-top: 20px!important;
+  padding-left: 0px!important;
+  border-radius: 5px;
+}
+
+.title1{
+  font-size: .7rem!important;
+}
+
+.btn-cart{
+    font-size: .7rem!important;
+    padding-left: 15px!important; 
+    padding-right: 15px!important;
+}
+.col-mo{
+  width: 50%!important;
+}
+
+.media-body{
+  text-align: center;
+}
+
+.imagetiles{
+  padding-top: 0px!important;
+  padding-left: 10px!important;
+    padding-right: 10px!important;
+}
+
+.four{
+  width: 25%!important;
+}
+
+.img-m{
+  width: 100%!important;
+}
+
+.breadcumbs{
+  padding-bottom: 50px;
+  padding-left: 30px!important;
+}
+
+.add-bg{
+  border-radius: 15px;
+  height: 10px!important;
+  vertical-align: middle;
+  margin-top: -150px;
+}
+
+}
+
+.iti {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.backdrop{
+  z-index: 1999;
+  position: fixed!important;;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.spinner-three-bounce {
+  width: 70px;
+  text-align: center;
+  position: fixed!important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20px;
+  margin: auto;
+  z-index: 2000;
 }
 

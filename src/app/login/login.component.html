@@ -26,10 +26,25 @@
                                             <label for="exampleInputEmail1">Email address</label>
                                             <input type="email" [(ngModel)]="email" name="email" class="form-control" id="exampleInputEmail1" />
                                         </div>
+
+
+
                                         <div *ngIf="loginEmail===false" class="form-group mb-1">
                                             <label for="exampleInputEmail1">Téléphone</label>
-                                            <international-phone-number class="form-control" [(ngModel)]="phone_number" placeholder="Entrez votre numéro" [maxlength]="20" [defaultCountry]="'cm'" [locale]="'en'" [required]="true"  name="phone_number" ></international-phone-number>
+                                            <input type="text"
+                                            name="phone_number"
+                                            class="form-control phone"
+                                            ng2TelInput
+                                            [ng2TelInputOptions]="{initialCountry: 'cm'}"
+                                            (hasError)="hasError($event)"
+                                            (ng2TelOutput)="getNumber($event)"
+                                            (intlTelInputObject)="telInputObject($event)"
+                                            (countryChange)="onCountryChange($event)" />
+
                                         </div>
+
+
+
                                         <div class="col-lg-12" style="background-color: white;">
                                             <label for="exampleInputEmail1">Mot de passe</label>
                                             <div class="input-group mb-1 mt-2">
@@ -47,7 +62,7 @@
                                         <button *ngIf="loginEmail===false" (click)="loginPhone()" type="btn" class="btn btn-primary">Connexion</button>
                                     </form>
                                         <!-- end card -->
-                                        <p class="text-muted text-center mt-3 mb-0">Mot de passe perdu ? <a [routerLink]="['/recupreation']" class="text-primary ml-1">Recupérez-le maintenant</a></p>
+                                       <!--  <p class="text-muted text-center mt-3 mb-0">Mot de passe perdu ? <a [routerLink]="['/recupreation']" class="text-primary ml-1">Recupérez-le maintenant</a></p> -->
                                         <!-- end row -->
                                 </div>
                                 

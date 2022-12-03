@@ -36,6 +36,27 @@ export class LoginComponent implements OnInit {
     }); */
   }
 
+
+  onCountryChange($event){
+    console.log("onCountryChange", $event );
+  }
+
+  getNumber($event){
+    console.log("Get number", $event );
+    this.phone_number = $event;
+   // this.check_profile_completed_update()
+
+  }
+
+  telInputObject($event){
+    console.log("telInputObject", $event );
+  }
+
+  hasError($event){
+    this.phone_number=undefined 
+    //this.check_profile_completed_update()
+  }
+
   passwordo() {
     this.showo = !this.showo;
 }
@@ -87,19 +108,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('is_user_infos', JSON.stringify(da.user));
         if(localStorage.getItem('current_url')){
           var url = localStorage.getItem('current_url');
-          console.log(url);
+          
           let current_url = JSON.parse(url);
-          let params = {
-            id : current_url.value,
-          }
-          console.log("type", current_url.type);
-          //if(current_url.type){
-              localStorage.removeItem('current_url');
-              this.functions.goToProduct("/item", params);
-          //}
-        //  else{
-         ///   this.router.navigate(['/mon-compte']);
-         // }
+          console.log(current_url.link);
+          //let myUrl = "/"+current_url.link
+           localStorage.removeItem('current_url');
+            this.router.navigate([current_url.link]);
           }
           else{
             this.router.navigate(['/mon-compte']);

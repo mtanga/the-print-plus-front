@@ -2,11 +2,19 @@
 
 *{padding:0;margin:0;}
 .container{
-    position:fixed;
+    position: absolute;
     background: #f6f6f6;
     color: white;
     height: 100%;
+    width: 100%!important;
 }
+
+@media (min-width: 1200px){
+    .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 100%!important;
+    }
+}
+
 
 @media (min-width: 1400px){
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
@@ -24,15 +32,15 @@ body{
 
 .float{
     position: fixed;
-    width: 600px;
-    height: 200px;
+    width: 400px;
+    height:100px;
     bottom: 0px;
     right: 0px;
     background-color: #ECECEC;
     color: #FFF;
     text-align: left;
-    padding-top: 50px;
-    padding-left: 20px;
+    padding-top: 20px;
+    padding-left: 15px;
     border-radius: 5px;
 }
 

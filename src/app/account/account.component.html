@@ -47,8 +47,15 @@
                         <div class="col-lg-12">
                               <div class="form-group mb-1">
                                   <label for="exampleInputPassword1">Téléphone</label>
-                                  <international-phone-number class="form-control" [(ngModel)]="infos.phone" [value]="infos.phone" [maxlength]="20"  [locale]="'en'" [required]="true"  name="phone" ></international-phone-number>
-                                 <!--  <input type="text" [(ngModel)]="infos.phone" name="phone" [value]="infos.phone" class="form-control" id="exampleInputPassword1" /> -->
+                                  <input type="text"
+                                  [value]="infos?.phone"
+                                  class="form-control phone"
+                                  ng2TelInput
+                                  [ng2TelInputOptions]="{initialCountry: 'cm'}"
+                                  (hasError)="hasError($event)"
+                                  (ng2TelOutput)="getNumber($event)"
+                                  (intlTelInputObject)="telInputObject($event)"
+                                  (countryChange)="onCountryChange($event)" />
                               </div>
                           </div>
                         </div>
@@ -174,16 +181,77 @@
               <div *ngIf="orders?.length==0">
                 <p>Aucune commande trouvées sur votre compte.</p>
               </div>
-              <ol class="list-group list-group-numbered">
-                <li *ngFor="let item of orders;" class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Commande #{{item.id}}</div>
-                      <p><b>Méthode : </b>{{item.shipping_method}}</p>
-                      <p><b>Date : </b>{{item.updated_at}}</p>
+
+
+              <div *ngFor="let item of orders;">
+                <section class="" style="" >
+                  <div class="container h-100" style="padding-bottom:10px;padding-left: 0px!important;padding-left: 0px!important;">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                      <div class="col">
+                        <div class="card card-stepper" style="border-radius: 10px;">
+                          <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                              <div class="d-flex flex-column">
+                                <span class="lead fw-normal">Commande #{{item.id}}</span>
+                                <span class="text-muted small">{{item.shipping_method}}</span>
+                                <span class="text-muted small">{{item.updated_at}}</span>
+                              </div>
+                              <div>
+                                <span class="price">{{item.shipping_total}} F CFA</span><br>
+                                <button class="btn btn-outline-primary" type="button" (click)="showImage(item)">Voir mes images</button>
+                              </div>
+                            </div>
+                            <hr class="my-4">
+                
+                            <div class="d-flex flex-row justify-content-between align-items-center align-content-center">
+                              <span class="dot"></span>
+                              
+                              <hr class="flex-fill track-line"><span class="dot"></span>
+
+
+                              <hr class="flex-fill track-line"><span class="dot"></span>
+                              <hr class="flex-fill track-line"><span class="dot"></span>
+                              <hr class="flex-fill track-line"><span
+                                class="d-flex justify-content-center align-items-center big-dot dot">
+                                <i class="fa fa-check text-white"></i></span>
+                            </div>
+                
+                            <div class="d-flex flex-row justify-content-between align-items-center">
+                              <div 
+                              *ngFor="let step of steps; let i = index"
+                              [ngClass]="{
+                                'd-flex': true,
+                                'flex-column': true,
+                                'align-items-start': i==0,
+                                'justify-content-center': true
+                              }">
+                                 <span 
+                                 [ngClass]="{
+                                   'stepii' : i==4,
+                                   'stepi' : i==0,
+                                   'step' : i<3,
+                                   'current' : step.id == item.status,
+                                   'stepiii' : i==3
+                                 }">{{step.item}}</span>
+                              </div>
+                            </div>
+                
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <span class="price">{{item.shipping_total}} {{item.currency}}</span>
-                </li>
-              </ol>
+                </section>
+
+
+              </div>
+
+
+         
+              <ngx-loading
+              [show]="loading"
+              [config]="{ backdropBorderRadius: '3px' }"
+            ></ngx-loading>
             </div>
 
 

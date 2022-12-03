@@ -42,6 +42,9 @@ export class DecoComponent implements OnInit {
       //show = 
       return "Choix multiples";
     }
+    else if(item.length==0){
+      return "Choix multiples";
+    }
     else{
       item.forEach(element => {
         if(show == ""){

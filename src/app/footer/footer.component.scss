@@ -1,5 +1,5 @@
 .footer-title{
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 700!important;
 }
 .list-type{
@@ -10,21 +10,30 @@
 .m-50{
     margin-top:50px;
 }
+.p-footer{
+    color: #8D8A8A;
+    padding-top: 25px;
+}
 
 h3{
-    color: white;
+    color: #8D8A8A;
 }
 .coli {
     flex: inherit;
     width: 50px;
 }
+.text-white{
+    color: #8D8A8A!important;
+}
+
+
 
 li{
-    color: white;
+    color: #8D8A8A;
 }
 
 a{
-    color: white;
+    color: #8D8A8A;
 }
 
 .bg-custom-image{
@@ -32,7 +41,7 @@ a{
 }
 
 .bg-custom-copyright{
-    background-color:#00B0EF;
+    background-color:#292929;
 }
 
 .copy-p{
@@ -103,5 +112,13 @@ li{
 
   .py-5-custom {
     padding-top: 5rem!important;
-    padding-bottom: 5rem!important;
+    padding-bottom: 8rem!important;
+}
+
+@media only screen and (min-width: 768px) {
+.desk-align{
+    display: flex;
+    align-items: inherit;
+    justify-content: center!important;
+}
 }
